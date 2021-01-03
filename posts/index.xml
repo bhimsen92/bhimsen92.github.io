@@ -6,8 +6,139 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Sun, 03 Jan 2021 23:37:10 +0530</lastBuildDate>
         <atom:link href="https://bhimsen92.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Python Metaclass and It&#39;s Magic Methods</title>
+            <link>https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/</link>
+            <pubDate>Sun, 03 Jan 2021 23:37:10 +0530</pubDate>
+            
+            <guid>https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/</guid>
+            <description>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&amp;rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class.</description>
+            <content type="html"><![CDATA[<p>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during <code>class</code> object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called <code>metaclass</code>.</p>
+<p><code>metaclass</code> is a class of a class. We know that in python everything is an object. Which means there is a <code>class</code> or <code>blueprint</code> for every object we see. In python <code>class</code> is also an object and the thing that creates it is called the <code>metaclass</code>. In python it is the <code>type</code> class. It is a built in entity and there is no way to recreate it and since it is a class, we can inherit it. This we will discuss in the coming sections.</p>
+<p>Let&rsquo;s analyze the code a little bit to see what we discussed is correct:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>:
+<span style="color:#f92672">...</span>     <span style="color:#66d9ef">pass</span>
+<span style="color:#f92672">...</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> t <span style="color:#f92672">=</span> Test()
+<span style="color:#f92672">&gt;&gt;&gt;</span> t<span style="color:#f92672">.</span>__class__  <span style="color:#75715e"># t is instance of class Test.</span>
+<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>Test<span style="color:#e6db74">&#39;&gt;</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> Test<span style="color:#f92672">.</span>__class__ <span style="color:#75715e"># Test is an instance of type class.</span>
+<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">type</span><span style="color:#e6db74">&#39;&gt;</span>
+</code></pre></div><p>We can also instantiate <code>class</code> objects at runtime. Although it looks bit contrived but we can achieve it. The method signature to do that is: <code>type(class_name, base_classes_tupe, dict)</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init</span>(self, name, age):
+<span style="color:#f92672">...</span>   self<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> name
+<span style="color:#f92672">...</span>   self<span style="color:#f92672">.</span>age <span style="color:#f92672">=</span> age
+<span style="color:#f92672">...</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> Person <span style="color:#f92672">=</span> type(<span style="color:#e6db74">&#34;Person&#34;</span>, (object,), {<span style="color:#e6db74">&#34;__init__&#34;</span>: init})
+<span style="color:#f92672">&gt;&gt;&gt;</span> x <span style="color:#f92672">=</span> Person(<span style="color:#e6db74">&#34;hello world&#34;</span>, <span style="color:#ae81ff">100</span>)
+<span style="color:#f92672">&gt;&gt;&gt;</span> x
+<span style="color:#f92672">&lt;</span>__main__<span style="color:#f92672">.</span>Person object at <span style="color:#ae81ff">0x10c80c210</span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> x<span style="color:#f92672">.</span>name
+<span style="color:#e6db74">&#39;hello world&#39;</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> x<span style="color:#f92672">.</span>age
+<span style="color:#ae81ff">100</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> Person(<span style="color:#e6db74">&#34;hello world&#34;</span>, <span style="color:#ae81ff">200</span>)
+<span style="color:#f92672">&gt;&gt;&gt;</span> y<span style="color:#f92672">.</span>age
+<span style="color:#ae81ff">200</span>
+</code></pre></div><p>We saw that we can create <code>classes</code> at runtime using <code>type</code>. But can we manipulate the class definition when
+it is defined in the traditional/usual way ? yes we can and this is where <code>metaclass</code> and magic methods come into play.</p>
+<h2 id="metaclass-and-__new__-__init__-__call__-magic-methods">metaclass and __new__, __init__, __call__ magic methods:</h2>
+<p>We know that a <code>metaclass</code> is a class which creates classes. In python the default <code>metaclass</code> for all classes is <code>type</code>. And we saw how it was used to instantiate class objects. So if we as a developer want to control or manipulate class object creation, we have to come up with our own metaclass. Since <code>type</code> is a class, we can do that by inherting it.</p>
+<p>Also before we begin, the magic methods <code>__new__, __init__, __call__</code> are nothing to do with <code>metaclass</code>. You can define them on any class and it does not have to inherit <code>type</code> class. They all deal with objects but in case of <code>metaclass</code>, these objects are <code>classes</code>. We just need to keep that in mind. Also these executed in the following order: <code>__new__, __init__, __call__</code>.</p>
+<p>Without further ado, lets create our first metaclass. In this example, we will simply print the arguments these magic methods receive. This will help us understand when these methods are called. After that we will try to implement <code>singleton, factory pattern</code> and adding <code>getter and setter</code> by default to class attributes.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DefaultMeta</span>(type):
+  <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+    <span style="color:#75715e"># mcs is the metaclass: DefaultMeta</span>
+    <span style="color:#75715e"># name: class name it is about to create.</span>
+    <span style="color:#75715e"># bases: parent classes defined on the class.</span>
+    <span style="color:#75715e"># attrs: attributes defined in the class: this includes class properties and methods. Attributes added in the classes __init__ method(which deals with objects of class) are not received here.</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;mcs:&#34;</span>, mcs)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;name:&#34;</span>, name)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;bases:&#34;</span>, bases)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;attrs:&#34;</span>, attrs)
+    <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, bases, attrs)  <span style="color:#75715e"># here mcs needs to be explicitly passed as first argument</span>
+
+  <span style="color:#66d9ef">def</span> __init__(cls, name, bases, attrs):
+    <span style="color:#75715e"># same arguments except for the first argument. Here the class object is already created.</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;cls:&#34;</span>, cls)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;name:&#34;</span>, name)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;bases:&#34;</span>, bases)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;attrs:&#34;</span>, attrs)
+    super()<span style="color:#f92672">.</span>__init__(name, bases, attrs)  <span style="color:#75715e"># __init__ here is an instance method so no need to pass `cls` in the arguments.</span>
+
+  <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+    <span style="color:#75715e"># called when user tries to instantiate an object: ClassName(*args, **kwargs)</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;args:&#34;</span>, args)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;kwargs:&#34;</span>, kwargs)
+    obj <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+    <span style="color:#66d9ef">return</span> obj
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>DefaultMeta):
+  some_prop <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>():
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+
+mcs: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>DefaultMeta<span style="color:#e6db74">&#39;&gt;</span>
+name: Test
+bases: ()
+attrs: {<span style="color:#e6db74">&#39;__module__&#39;</span>: <span style="color:#e6db74">&#39;__main__&#39;</span>, <span style="color:#e6db74">&#39;__qualname__&#39;</span>: <span style="color:#e6db74">&#39;Test&#39;</span>, <span style="color:#e6db74">&#39;some_prop&#39;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#39;test&#39;</span>: <span style="color:#f92672">&lt;</span>function Test<span style="color:#f92672">.</span>test at <span style="color:#ae81ff">0x10c7f4dd0</span><span style="color:#f92672">&gt;</span>}
+cls: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>Test<span style="color:#e6db74">&#39;&gt;</span>
+name: Test
+bases: ()
+attrs: {<span style="color:#e6db74">&#39;__module__&#39;</span>: <span style="color:#e6db74">&#39;__main__&#39;</span>, <span style="color:#e6db74">&#39;__qualname__&#39;</span>: <span style="color:#e6db74">&#39;Test&#39;</span>, <span style="color:#e6db74">&#39;some_prop&#39;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#39;test&#39;</span>: <span style="color:#f92672">&lt;</span>function Test<span style="color:#f92672">.</span>test at <span style="color:#ae81ff">0x10c7f4dd0</span><span style="color:#f92672">&gt;</span>}
+</code></pre></div><p>So you can see that as soon as interpreter encountered the class definition, it invoked our metaclass to create it. The steps could go something like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Test <span style="color:#f92672">=</span> DefaultMeta<span style="color:#f92672">.</span>__new__(DefaultMeta, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
+DefaultMeta<span style="color:#f92672">.</span>__init__(Test, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
+</code></pre></div><p><code>__call__</code> will be called when you try to create an object of <code>Test</code>.</p>
+<p>Just for fun what we can do is, create a <code>RogueMeta</code> class which simply wipes all the attributes from the class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RogueMeta</span>(type):
+    <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+        <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, (), {})
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>RogueMeta):
+    some_prop <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+
+    <span style="color:#66d9ef">def</span> __init__(self, x):
+        self<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> x
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>():
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+
+
+z <span style="color:#f92672">=</span> Test(<span style="color:#ae81ff">100</span>)
+<span style="color:#66d9ef">print</span>(z<span style="color:#f92672">.</span>x)
+</code></pre></div><p>you should get this error when you execute the above code block:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Traceback (most recent call last):
+  File <span style="color:#e6db74">&#34;./test.py&#34;</span>, line <span style="color:#ae81ff">16</span>, <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>
+    z <span style="color:#f92672">=</span> Test(<span style="color:#ae81ff">100</span>)
+<span style="color:#a6e22e">TypeError</span>: Test() takes no arguments
+</code></pre></div><p>Remember we can&rsquo;t achieve this in <code>__init__</code> method because class is already created by that time. So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside <code>__init__</code> method.</p>
+<h2 id="singleton-pattern-using-metaclass">Singleton pattern using metaclass:</h2>
+<p>Singleton pattern, we want to restric the instance of a class to one single instance. Mutiple call to the creation of objects should return already created object. So we need to intercept the object creation step which is <code>__call__</code> method of the metaclass. Remember <code>__new__ and __init__</code> are called when interpreter encounters the class definition and it happens only one time. <code>__call__</code> is called whenever we want to create an object of the class which is what we need in this scenario.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span>(type):
+    _cache <span style="color:#f92672">=</span> {}
+
+    <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+        <span style="color:#66d9ef">if</span> cls <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> cls<span style="color:#f92672">.</span>_cache:
+            cls<span style="color:#f92672">.</span>_cache[cls] <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+        <span style="color:#66d9ef">return</span> cls<span style="color:#f92672">.</span>_cache[cls]
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>Singleton):
+    <span style="color:#66d9ef">pass</span>
+
+a <span style="color:#f92672">=</span> Test()
+b <span style="color:#f92672">=</span> Test()
+
+<span style="color:#66d9ef">print</span>(a)
+<span style="color:#66d9ef">print</span>(b)
+<span style="color:#75715e"># both should print the same address location.</span>
+</code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>2020 3/4 In Review</title>
