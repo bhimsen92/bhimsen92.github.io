@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+        Python Metaclass and It&#39;s Magic Methods - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&amp;rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class." />
+    <meta name="generator" content="Hugo 0.74.3 with theme pure" />
+    <title>Python Metaclass and It&#39;s Magic Methods - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://bhimsen92.github.io/css/style.min.5743fa7b2206cb1eb1d7532cda60d1ebf1e3ae4aac4077fc182a92c911e04e02.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Python Metaclass and It&#39;s Magic Methods" />
+<meta property="og:description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bhimsen92.github.io/2021/01/python-magic-methods/" />
+<meta property="article:published_time" content="2021-01-03T23:37:10+05:30" />
+<meta property="article:modified_time" content="2021-01-03T23:37:10+05:30" />
+<meta itemprop="name" content="Python Metaclass and It&#39;s Magic Methods">
+<meta itemprop="description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class.">
+<meta itemprop="datePublished" content="2021-01-03T23:37:10+05:30" />
+<meta itemprop="dateModified" content="2021-01-03T23:37:10+05:30" />
+<meta itemprop="wordCount" content="1034">
+
+
+
+<meta itemprop="keywords" content="python," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Python Metaclass and It&#39;s Magic Methods"/>
+<meta name="twitter:description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class."/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://bhimsen92.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">xiaoheiAh</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">author title</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="Type something..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">Home</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">Archives</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">Categories</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">Tags</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about/">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">About</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> Tags</h3>
+    <div id="tag-cloud-list" class="widget-body">
+            
+            
+            <a href="https://bhimsen92.github.io/tags/python/" class="tag-list-link" rel="1">python<span
+               class="tag-list-count">1</span></a>
+            
+    </div>
+<script>
+document.onreadystatechange = () => {
+  if (document.readyState === 'complete') {
+    tagCloud('#tag-cloud-list a',  8 ,  20 );
+  }
+};
+
+function tagCloud(where, min, max) {
+  let iMax = 0;
+  let iMin = 0;
+  $(where).each(function() {
+    let weight = Number($(this).attr("rel"));
+    if(iMax < weight) iMax = weight;
+    if(iMin > weight || iMin == 0) iMin = weight;
+  });
+  let step = (max - min)/(iMax - iMin);
+  $(where).each(function() {
+    let weight = $(this).attr("rel") - iMin;
+    $(this).css({"font-size": min + (weight * step) + 'px'});
+  });
+};
+</script>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> Categories</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> Tags</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://bhimsen92.github.io/tags/python/" class="tag-list-link">python</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bhimsen92.github.io/2021/01/python-magic-methods/" class="title">Python Metaclass and It&#39;s Magic Methods</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-03 23:37:10 &#43;0530 IST" itemprop="datePublished">2021-01-03</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://bhimsen92.github.io/2020/08/first/" class="title">2020 3/4 In Review</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2020-08-26 00:00:00 &#43;0000 UTC" itemprop="datePublished">2020-08-26</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">Catalogue</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2021/01/python-magic-methods/"
+    >Python Metaclass and It&#39;s Magic Methods</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://bhimsen92.github.io/2021/01/python-magic-methods/" class="article-date">
+  <time datetime="2021-01-03 23:37:10 &#43;0530 IST" itemprop="datePublished">2021-01-03</time>
+</a>
+</span>
+  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/python/"> python </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1034 words</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Time: 5 minutes </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during <code>class</code> object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called <code>metaclass</code>.</p>
+<p><code>metaclass</code> is a class of a class. We know that in python everything is an object. Which means there is a <code>class</code> or <code>blueprint</code> for every object we see. In python <code>class</code> is also an object and the thing that creates it is called the <code>metaclass</code>. In python it is the <code>type</code> class. It is a built in entity and there is no way to recreate it and since it is a class, we can inherit it. This we will discuss in the coming sections.</p>
+<p>Let&rsquo;s analyze the code a little bit to see what we discussed is correct:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Test:
+...     pass
+...
+&gt;&gt;&gt; t = Test()
+&gt;&gt;&gt; t.__class__  # t is instance of class Test.
+&lt;class '__main__.Test'&gt;
+&gt;&gt;&gt; Test.__class__ # Test is an instance of type class.
+&lt;class 'type'&gt;
+</code></pre>
+<p>We can also instantiate <code>class</code> objects at runtime. Although it looks bit contrived but we can achieve it. The method signature to do that is: <code>type(class_name, base_classes_tupe, dict)</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; def init(self, name, age):
+...   self.name = name
+...   self.age = age
+...
+&gt;&gt;&gt; Person = type(&quot;Person&quot;, (object,), {&quot;__init__&quot;: init})
+&gt;&gt;&gt; x = Person(&quot;hello world&quot;, 100)
+&gt;&gt;&gt; x
+&lt;__main__.Person object at 0x10c80c210&gt;
+&gt;&gt;&gt; x.name
+'hello world'
+&gt;&gt;&gt; x.age
+100
+&gt;&gt;&gt; y = Person(&quot;hello world&quot;, 200)
+&gt;&gt;&gt; y.age
+200
+</code></pre>
+<p>We saw that we can create <code>classes</code> at runtime using <code>type</code>. But can we manipulate the class definition when
+it is defined in the traditional/usual way ? yes we can and this is where <code>metaclass</code> and magic methods come into play.</p>
+<h2 id="metaclass-and-__new__-__init__-__call__-magic-methods">metaclass and __new__, __init__, __call__ magic methods:</h2>
+<p>We know that a <code>metaclass</code> is a class which creates classes. In python the default <code>metaclass</code> for all classes is <code>type</code>. And we saw how it was used to instantiate class objects. So if we as a developer want to control or manipulate class object creation, we have to come up with our own metaclass. Since <code>type</code> is a class, we can do that by inherting it.</p>
+<p>Also before we begin, the magic methods <code>__new__, __init__, __call__</code> are nothing to do with <code>metaclass</code>. You can define them on any class and it does not have to inherit <code>type</code> class. They all deal with objects but in case of <code>metaclass</code>, these objects are <code>classes</code>. We just need to keep that in mind. Also these executed in the following order: <code>__new__, __init__, __call__</code>.</p>
+<p>Without further ado, lets create our first metaclass. In this example, we will simply print the arguments these magic methods receive. This will help us understand when these methods are called. After that we will try to implement <code>singleton, factory pattern</code> and adding <code>getter and setter</code> by default to class attributes.</p>
+<pre><code class="language-python">class DefaultMeta(type):
+  def __new__(mcs, name, bases, attrs):
+    # mcs is the metaclass: DefaultMeta
+    # name: class name it is about to create.
+    # bases: parent classes defined on the class.
+    # attrs: attributes defined in the class: this includes class properties and methods. Attributes added in the classes __init__ method(which deals with objects of class) are not received here.
+    print(&quot;mcs:&quot;, mcs)
+    print(&quot;name:&quot;, name)
+    print(&quot;bases:&quot;, bases)
+    print(&quot;attrs:&quot;, attrs)
+    return super().__new__(mcs, name, bases, attrs)  # here mcs needs to be explicitly passed as first argument
+
+  def __init__(cls, name, bases, attrs):
+    # same arguments except for the first argument. Here the class object is already created.
+    print(&quot;cls:&quot;, cls)
+    print(&quot;name:&quot;, name)
+    print(&quot;bases:&quot;, bases)
+    print(&quot;attrs:&quot;, attrs)
+    super().__init__(name, bases, attrs)  # __init__ here is an instance method so no need to pass `cls` in the arguments.
+
+  def __call__(cls, *args, **kwargs):
+    # called when user tries to instantiate an object: ClassName(*args, **kwargs)
+    print(&quot;args:&quot;, args)
+    print(&quot;kwargs:&quot;, kwargs)
+    obj = super().__call__(*args, **kwargs)
+    return obj
+
+class Test(metaclass=DefaultMeta):
+  some_prop = 100
+  def test():
+    print(&quot;hello world&quot;)
+
+mcs: &lt;class '__main__.DefaultMeta'&gt;
+name: Test
+bases: ()
+attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': &lt;function Test.test at 0x10c7f4dd0&gt;}
+cls: &lt;class '__main__.Test'&gt;
+name: Test
+bases: ()
+attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': &lt;function Test.test at 0x10c7f4dd0&gt;}
+</code></pre>
+<p>So you can see that as soon as interpreter encountered the class definition, it invoked our metaclass to create it. The steps could go something like this:</p>
+<pre><code class="language-python">Test = DefaultMeta.__new__(DefaultMeta, &quot;Test&quot;, (object,), {&quot;some_prop&quot;: 100, &quot;test&quot;: func_ref})
+DefaultMeta.__init__(Test, &quot;Test&quot;, (object,), {&quot;some_prop&quot;: 100, &quot;test&quot;: func_ref})
+</code></pre>
+<p><code>__call__</code> will be called when you try to create an object of <code>Test</code>.</p>
+<p>Just for fun what we can do is, create a <code>RogueMeta</code> class which simply wipes all the attributes from the class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.</p>
+<pre><code class="language-python">class RogueMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        return super().__new__(mcs, name, (), {})
+
+
+class Test(metaclass=RogueMeta):
+    some_prop = 100
+
+    def __init__(self, x):
+        self.x = x
+
+    def test():
+        print(&quot;hello world&quot;)
+
+
+z = Test(100)
+print(z.x)
+</code></pre>
+<p>you should get this error when you execute the above code block:</p>
+<pre><code class="language-python">Traceback (most recent call last):
+  File &quot;./test.py&quot;, line 16, in &lt;module&gt;
+    z = Test(100)
+TypeError: Test() takes no arguments
+</code></pre>
+<p>Remember we can&rsquo;t achieve this in <code>__init__</code> method because class is already created by that time. So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside <code>__init__</code> method.</p>
+<h2 id="singleton-pattern-using-metaclass">Singleton pattern using metaclass:</h2>
+<p>Singleton pattern, we want to restric the instance of a class to one single instance. Mutiple call to the creation of objects should return already created object. So we need to intercept the object creation step which is <code>__call__</code> method of the metaclass. Remember <code>__new__ and __init__</code> are called when interpreter encounters the class definition and it happens only one time. <code>__call__</code> is called whenever we want to create an object of the class which is what we need in this scenario.</p>
+<pre><code class="language-python">class Singleton(type):
+    _cache = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._cache:
+            cls._cache[cls] = super().__call__(*args, **kwargs)
+        return cls._cache[cls]
+
+class Test(metaclass=Singleton):
+    pass
+
+a = Test()
+b = Test()
+
+print(a)
+print(b)
+# both should print the same address location.
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>Permalink: </strong>
+      <a href="https://bhimsen92.github.io/2021/01/python-magic-methods/" title="Python Metaclass and It&#39;s Magic Methods" target="_blank" rel="external">https://bhimsen92.github.io/2021/01/python-magic-methods/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xiaoheiAh" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://bhimsen92.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xiaoheiAh" target="_blank"><span class="text-dark">xiaoheiAh</span><small class="ml-1x">author title</small></a></h3>
+        <div>Good Good Study, Day Day Up~</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://bhimsen92.github.io/2020/08/first/" title="2020 3/4 In Review"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;Older</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="Catalogue" role="button">
+                    <span>[&nbsp;</span><span>Catalogue</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://bhimsen92.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2021
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://bhimsen92.github.io/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://bhimsen92.github.io/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            ROOT_URL: 'https:\/\/bhimsen92.github.io',
+            CONTENT_URL: 'https:\/\/bhimsen92.github.io\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://bhimsen92.github.io/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

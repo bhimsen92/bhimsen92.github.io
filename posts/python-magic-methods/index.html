@@ -1,30 +1,55 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Posts on Bheemsen Kulkarni</title>
-        <link>https://bhimsen92.github.io/posts/</link>
-        <description>Recent content in Posts on Bheemsen Kulkarni</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Sun, 03 Jan 2021 23:37:10 +0530</lastBuildDate>
-        <atom:link href="https://bhimsen92.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Python Metaclass and It&#39;s Magic Methods</title>
+    <meta name="description" content="">
+    <meta name="author" content='Bheemsen Kulkarni'>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+        <link rel="icon" type="image/ico" href="https://bhimsen92.github.io/favicon.ico">
+    
+
+    
         
-        <item>
-            <title>Python Metaclass and It&#39;s Magic Methods</title>
-            <link>https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/</link>
-            <pubDate>Sun, 03 Jan 2021 23:37:10 +0530</pubDate>
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
+        <a class="navbar-brand mx-0 mr-sm-auto" href="https://bhimsen92.github.io">Programmer</a>
+        <div class="navbar-nav flex-row flex-wrap justify-content-center">
             
-            <guid>https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/</guid>
-            <description>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&amp;rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
-metaclass is a class of a class.</description>
-            <content type="html"><![CDATA[<p>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes
-from its ability to give the developers the freedom to manipulate the language at run time. One such ability
-is how a programmer can intercept the control during <code>class</code> object creation and change its outlook entirely
-from what programmer intented. This is achieved through a language feature called <code>metaclass</code>.</p>
-<p><code>metaclass</code> is a class of a class. We know that in python everything is an object. Which means there is a
-<code>class</code> or <code>blueprint</code> for every object we see. In python <code>class</code> is also an object and it is created using
-<code>type</code> class and it is a metaclass. It is a built in entity and there is no way to recreate it and since it is
-a class, we can inherit it. This we will discuss in the coming sections.</p>
+                
+                
+                    <a class="nav-item nav-link" href="/about">
+                        About
+                    </a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/contact">
+                        Contact
+                    </a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <p>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during <code>class</code> object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called <code>metaclass</code>.</p>
+<p><code>metaclass</code> is a class of a class. We know that in python everything is an object. Which means there is a <code>class</code> or <code>blueprint</code> for every object we see. In python <code>class</code> is also an object and the thing that creates it is called the <code>metaclass</code>. In python it is the <code>type</code> class. It is a built in entity and there is no way to recreate it and since it is a class, we can inherit it. This we will discuss in the coming sections.</p>
 <p>Let&rsquo;s analyze the code a little bit to see what we discussed is correct:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>:
 <span style="color:#f92672">...</span>     <span style="color:#66d9ef">pass</span>
@@ -53,14 +78,8 @@ a class, we can inherit it. This we will discuss in the coming sections.</p>
 </code></pre></div><p>We saw that we can create <code>classes</code> at runtime using <code>type</code>. But can we manipulate the class definition when
 it is defined in the traditional/usual way ? yes we can and this is where <code>metaclass</code> and magic methods come into play.</p>
 <h2 id="metaclass-and-__new__-__init__-__call__-magic-methods">metaclass and __new__, __init__, __call__ magic methods:</h2>
-<p>We know that a <code>metaclass</code> is a class which creates classes. In python the default <code>metaclass</code> for all classes
-is <code>type</code>. And we saw how it was used to instantiate class objects. So if we as a developer want to control or
-manipulate class object creation, we have to come up with our own metaclass. Since <code>type</code> is a class, we can
-do that by inherting it.</p>
-<p>Also before we begin, the magic methods <code>__new__, __init__, __call__</code> are nothing to do with <code>metaclass</code>. You
-can define them on any class and it does not have to inherit <code>type</code> class. They all deal with objects but in
-case of <code>metaclass</code>, these objects are <code>classes</code>. We just need to keep that in mind. Also these methods
-executed in the following order: <code>__new__, __init__, __call__</code>.</p>
+<p>We know that a <code>metaclass</code> is a class which creates classes. In python the default <code>metaclass</code> for all classes is <code>type</code>. And we saw how it was used to instantiate class objects. So if we as a developer want to control or manipulate class object creation, we have to come up with our own metaclass. Since <code>type</code> is a class, we can do that by inherting it.</p>
+<p>Also before we begin, the magic methods <code>__new__, __init__, __call__</code> are nothing to do with <code>metaclass</code>. You can define them on any class and it does not have to inherit <code>type</code> class. They all deal with objects but in case of <code>metaclass</code>, these objects are <code>classes</code>. We just need to keep that in mind. Also these executed in the following order: <code>__new__, __init__, __call__</code>.</p>
 <p>Without further ado, lets create our first metaclass. In this example, we will simply print the arguments these magic methods receive. This will help us understand when these methods are called. After that we will try to implement <code>singleton, factory pattern</code> and adding <code>getter and setter</code> by default to class attributes.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DefaultMeta</span>(type):
   <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
@@ -106,8 +125,7 @@ attrs: {<span style="color:#e6db74">&#39;__module__&#39;</span>: <span style="co
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Test <span style="color:#f92672">=</span> DefaultMeta<span style="color:#f92672">.</span>__new__(DefaultMeta, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
 DefaultMeta<span style="color:#f92672">.</span>__init__(Test, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
 </code></pre></div><p><code>__call__</code> will be called when you try to create an object of <code>Test</code>.</p>
-<p>Just for fun what we can do is, create a <code>RogueMeta</code> class which simply wipes out all the attributes from the
-class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.</p>
+<p>Just for fun what we can do is, create a <code>RogueMeta</code> class which simply wipes all the attributes from the class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RogueMeta</span>(type):
     <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
         <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, (), {})
@@ -150,61 +168,11 @@ b <span style="color:#f92672">=</span> Test()
 <span style="color:#66d9ef">print</span>(a)
 <span style="color:#66d9ef">print</span>(b)
 <span style="color:#75715e"># both should print the same address location.</span>
-</code></pre></div><h2 id="gettersetter-using-python-magic-methods">Getter/Setter using python magic methods.</h2>
-<p>Here we need intercept <code>__new__</code> and <code>__call__</code> methods and update object dictionaries accordingly.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> collections
-<span style="color:#f92672">import</span> functools
+</code></pre></div>
+</div>
 
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_getter</span>(obj, key):
-    <span style="color:#66d9ef">return</span> obj<span style="color:#f92672">.</span>dict[key]
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_setter</span>(obj, key, value):
-    obj<span style="color:#f92672">.</span>dict[key] <span style="color:#f92672">=</span> value
-
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GetterSetter</span>(type):
-    <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
-        new_attributes_dict, removed_kvs <span style="color:#f92672">=</span> {}, {}
-        <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> attrs<span style="color:#f92672">.</span>items():
-            <span style="color:#66d9ef">if</span> isinstance(v, collections<span style="color:#f92672">.</span>Callable):
-                new_attributes_dict[k] <span style="color:#f92672">=</span> v
-            <span style="color:#66d9ef">else</span>:
-                removed_kvs[k] <span style="color:#f92672">=</span> v
-        <span style="color:#75715e"># create the class.</span>
-        cls <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, bases, new_attributes_dict)
-        <span style="color:#75715e"># store class variables in a protected dict.</span>
-        cls<span style="color:#f92672">.</span>dict <span style="color:#f92672">=</span> removed_kvs
-        <span style="color:#75715e"># attach getter/setter methods.</span>
-        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> removed_kvs:
-            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;__&#34;</span>):
-                setattr(cls, f<span style="color:#e6db74">&#34;get_{k}&#34;</span>, functools<span style="color:#f92672">.</span>partial(_getter, cls, k))
-                setattr(cls, f<span style="color:#e6db74">&#34;set_{k}&#34;</span>, functools<span style="color:#f92672">.</span>partial(_setter, cls, k))
-        <span style="color:#66d9ef">return</span> cls
-
-    <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
-        obj <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
-        obj<span style="color:#f92672">.</span>__dict__ <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;dict&#34;</span>: obj<span style="color:#f92672">.</span>__dict__}
-        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> obj<span style="color:#f92672">.</span>dict:
-            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;__&#34;</span>):
-                setattr(obj, f<span style="color:#e6db74">&#34;get_{k}&#34;</span>, functools<span style="color:#f92672">.</span>partial(_getter, obj, k))
-                setattr(obj, f<span style="color:#e6db74">&#34;set_{k}&#34;</span>, functools<span style="color:#f92672">.</span>partial(_setter, obj, k))
-        <span style="color:#66d9ef">return</span> obj
-
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>GetterSetter):
-    table <span style="color:#f92672">=</span> {}
-
-    <span style="color:#66d9ef">def</span> __init__(self, a, b):
-        self<span style="color:#f92672">.</span>a <span style="color:#f92672">=</span> a
-        self<span style="color:#f92672">.</span>b <span style="color:#f92672">=</span> b
-
-a <span style="color:#f92672">=</span> Test(a<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, b<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>)
-<span style="color:#66d9ef">print</span>(a)
-<span style="color:#66d9ef">print</span>(a<span style="color:#f92672">.</span>b())
-</code></pre></div>]]></content>
-        </item>
-        
-    </channel>
-</rss>
+        </div><div id="footer" class="mb-5">
+    
+</div>
+</body>
+</html>
