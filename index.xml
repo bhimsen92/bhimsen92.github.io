@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 03 Jan 2021 23:37:10 +0530</lastBuildDate>
+    <lastBuildDate>Wed, 20 Jan 2021 05:27:22 +0530</lastBuildDate>
     
 	<atom:link href="https://bhimsen92.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Rabbitmq Tutorial</title>
+      <link>https://bhimsen92.github.io/posts/2021/01/rabbitmq-tutorial/</link>
+      <pubDate>Wed, 20 Jan 2021 05:27:22 +0530</pubDate>
+      
+      <guid>https://bhimsen92.github.io/posts/2021/01/rabbitmq-tutorial/</guid>
+      <description>Before I write about Rabbitmq, let&amp;rsquo;s briefly talk about what message queues are in the first place. Message Queue is a programming paradigm which is used for inter process communication where proceses are running either on the same machine or on different machines.
+When your design requires loose coupling between components, a part of your solution has a cpu intensive operation which can be delgated to a background process, you have to notify multiple components of a certain event then message queue is the solution that you would like to consider for your project.</description>
+    </item>
     
     <item>
       <title>Python Metaclass and It&#39;s Magic Methods</title>

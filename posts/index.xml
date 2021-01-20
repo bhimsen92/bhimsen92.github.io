@@ -6,8 +6,83 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Sun, 03 Jan 2021 23:37:10 +0530</lastBuildDate>
+        <lastBuildDate>Wed, 20 Jan 2021 05:27:22 +0530</lastBuildDate>
         <atom:link href="https://bhimsen92.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Rabbitmq Tutorial</title>
+            <link>https://bhimsen92.github.io/posts/2021/01/rabbitmq-tutorial/</link>
+            <pubDate>Wed, 20 Jan 2021 05:27:22 +0530</pubDate>
+            
+            <guid>https://bhimsen92.github.io/posts/2021/01/rabbitmq-tutorial/</guid>
+            <description>Before I write about Rabbitmq, let&amp;rsquo;s briefly talk about what message queues are in the first place. Message Queue is a programming paradigm which is used for inter process communication where proceses are running either on the same machine or on different machines.
+When your design requires loose coupling between components, a part of your solution has a cpu intensive operation which can be delgated to a background process, you have to notify multiple components of a certain event then message queue is the solution that you would like to consider for your project.</description>
+            <content type="html"><![CDATA[<p>Before I write about Rabbitmq, let&rsquo;s briefly talk about what message queues are in the first place.
+<strong>Message Queue</strong> is a programming paradigm which is used for inter process communication where proceses are running either on the same machine or on different machines.</p>
+<p>When your design requires loose coupling between components, a part of your solution has a cpu intensive operation which can be delgated to a background process, you have to notify multiple components of a certain event then message queue is the solution that you would like to consider for your project.</p>
+<p>Any software which implements message queueing paradigm has three basic components:</p>
+<ul>
+<li><em>Producer</em>: A process which produces messages and adds it to a queue.</li>
+<li><em>Queue</em>: A buffer where messages are stored before being read by the consumer process.</li>
+<li><em>Consumer</em>: A process which reads messages and does some action based on it.</li>
+</ul>
+<h3 id="rabbitmq">Rabbitmq</h3>
+<p>Rabbitmq is a message queueing software built by Pivotal software. It uses <a href="https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">AMQP</a> message protocol to communicate between the components(producer,consumer).</p>
+<h3 id="when-to-use-rabbitmq">When to use Rabbitmq</h3>
+<ul>
+<li>When you need dumb clients and a smart broker. This includes complex routing(we will talk about this when we discuss <strong>Exchanges</strong>), dead-lettering(handling unacked, ttl expired messages), priorities within the queue.</li>
+<li>When you want to persist data when consumers are not around.</li>
+</ul>
+<h3 id="basic-structure">Basic Structure</h3>
+<p><img src="/img/rabbitmq.png#center" alt="RabbitMQ Basic Structure"></p>
+<h3 id="rabbitmq-concepts">Rabbitmq Concepts</h3>
+<ul>
+<li>
+<p><strong>Queue</strong>: Buffer to store incoming messages until a consumer application process it.</p>
+</li>
+<li>
+<p><strong>Routing Key</strong>: It is like an address which the exchange uses it to deliver it to appropriate queue.</p>
+</li>
+<li>
+<p><strong>Binding Key</strong>: A pattern/string which is used link a queue with an exchange. When the routing key matches the binding key, the exchange delivers the message. If routing key does not match any binding key defined on the exchange, then the message is discarded.</p>
+</li>
+<li>
+<p><strong>Exchanges</strong>: In rabbitmq, the producer never sends any message directly to a queue. This makes sense as rabbitmq needs to handle complex routing patterns. So we need an entity that can receive the message and based on the routing key and exchange type deliver the message to appropriate queues. The task of an exchange is simple: it receives the message from the producer from one side and pushes it to a queue on the other side where routing key matches the binding queue. If multiple queues keys are matched then the <strong>message will be copied</strong> and sent to all the queues.</p>
+<p>Types of exchange types supported in rabbitmq:</p>
+<ul>
+<li>direct</li>
+<li>fanout</li>
+<li>topic</li>
+<li>header</li>
+</ul>
+<p>All these types will be explained in the example section.</p>
+</li>
+<li>
+<p>Persistence and Durability: When you create a queue or an exchange, you can mark it as durable so that they are not deleted between process restarts. To make a message persist you need send <code>deliver_mode=2</code> while publishing the message to an exchange.</p>
+</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p>First let us deploy a rabbitmq instance on our machine. We will use docker container to accomplish that. We will be using python&rsquo;s <code>pika</code> client to communicate with the broker.</p>
+<pre><code>docker run \
+  --name rabbitmq \
+  -h rabbitmq \
+  -e RABBITMQ_DEFAULT_USER=admin \
+  -e RABBITMQ_DEFAULT_PASS=password \
+  -p 15672:15672 \
+  -p 5672:5672 \
+  -v &lt;host_path&gt;:/var/lib/rabbitmq \
+  -d \
+  rabbitmq:3-management
+</code></pre><p>Once deployed you can access managment website at <code>http://localhost:15672</code>. Management UI of rabbitmq is pretty self explanatory. Exchange and Queue has there own tabs where we can create these entities and manage them later on. It also provides way to look at the stats such as message rates, total messages, number of messages ready to be delivered etc.</p>
+<h4 id="direct-exchange">Direct Exchange</h4>
+<p>To demostrate we will create one exchange called <code>logs</code> with durable set to <code>true</code>. We will also create three queues, two queues will be bound by <code>info,debug</code> binding keys and the last one will be bound by <code>error</code> key. So head over to management console and create the exchange and the queues(queue name can be anything).</p>
+<h4 id="topic-exchange">Topic Exchange</h4>
+<p>TBD.</p>
+<h4 id="fanout-exchange">Fanout Exchange</h4>
+<p>TBD.</p>
+<p>Thank you very much for reading this post :)</p>
+]]></content>
+        </item>
         
         <item>
             <title>Python Metaclass and It&#39;s Magic Methods</title>

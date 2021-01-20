@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 03 Jan 2021 23:37:10 +0530</lastBuildDate>
+    <lastBuildDate>Wed, 20 Jan 2021 05:27:22 +0530</lastBuildDate>
     
 	<atom:link href="https://bhimsen92.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,9 +15,18 @@
     <item>
       <title>python</title>
       <link>https://bhimsen92.github.io/tags/python/</link>
-      <pubDate>Sun, 03 Jan 2021 23:37:10 +0530</pubDate>
+      <pubDate>Wed, 20 Jan 2021 05:27:22 +0530</pubDate>
       
       <guid>https://bhimsen92.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rabbitmq</title>
+      <link>https://bhimsen92.github.io/tags/rabbitmq/</link>
+      <pubDate>Wed, 20 Jan 2021 05:27:22 +0530</pubDate>
+      
+      <guid>https://bhimsen92.github.io/tags/rabbitmq/</guid>
       <description></description>
     </item>
     
