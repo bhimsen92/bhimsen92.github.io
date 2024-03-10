@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>System-Design on Bheemsen Kulkarni</title>
+    <link>https://bhimsen92.github.io/tags/system-design/</link>
+    <description>Recent content in System-Design on Bheemsen Kulkarni</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 22 Jun 2023 01:20:00 +0530</lastBuildDate>
+    <atom:link href="https://bhimsen92.github.io/tags/system-design/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Template for System Design</title>
+      <link>https://bhimsen92.github.io/posts/2023/06/a-template-for-system-design/</link>
+      <pubDate>Thu, 22 Jun 2023 01:20:00 +0530</pubDate>
+      <guid>https://bhimsen92.github.io/posts/2023/06/a-template-for-system-design/</guid>
+      <description>Designing a software system is difficult, especially when you don&amp;rsquo;t have a plan or a set of instructions. But once you have a plan to guide you, it becomes easier to solve the problem step by step. In this blog, I will share a few things I learned from reading online and my own experience about how to approach system design questions at work or in interviews.&#xA;Problem statement To begin, it is important to accurately define the problem statement.</description>
+    </item>
+  </channel>
+</rss>

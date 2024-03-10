@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Bheemsen Kulkarni ">
+<meta name="description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&amp;rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class." />
+<meta name="keywords" content=", python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/" />
+
+
+    <title>
+        
+            Python Metaclass and It&#39;s Magic Methods :: Bheemsen Kulkarni  — A simple theme for Hugo
+        
+    </title>
+
+
+
+
+
+<link rel="stylesheet" href="https://bhimsen92.github.io/main.949191c1dcc9c4a887997048b240354e47152016d821198f89448496ba42e491.css" integrity="sha256-lJGRwdzJxKiHmXBIskA1TkcVIBbYIRmPiUSElrpC5JE=">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://bhimsen92.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://bhimsen92.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://bhimsen92.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://bhimsen92.github.io/site.webmanifest">
+    <link rel="mask-icon" href="https://bhimsen92.github.io/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="https://bhimsen92.github.io/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Python Metaclass and It&#39;s Magic Methods">
+<meta itemprop="description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class."><meta itemprop="datePublished" content="2021-01-03T23:37:10+05:30" />
+<meta itemprop="dateModified" content="2021-01-03T23:37:10+05:30" />
+<meta itemprop="wordCount" content="1188"><meta itemprop="image" content="https://bhimsen92.github.io/" />
+<meta itemprop="keywords" content="python," />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://bhimsen92.github.io/" /><meta name="twitter:title" content="Python Metaclass and It&#39;s Magic Methods"/>
+<meta name="twitter:description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class."/>
+
+
+
+    <meta property="og:title" content="Python Metaclass and It&#39;s Magic Methods" />
+<meta property="og:description" content="Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/" /><meta property="og:image" content="https://bhimsen92.github.io/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-03T23:37:10+05:30" />
+<meta property="article:modified_time" content="2021-01-03T23:37:10+05:30" />
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2021-01-03 23:37:10 &#43;0530 IST" />
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://bhimsen92.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text ">
+                cd ~</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://bhimsen92.github.io/about/">About</a></li><li><a href="https://bhimsen92.github.io/posts/">Posts</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        6 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/">Python Metaclass and It&rsquo;s Magic Methods</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes
+from its ability to give the developers the freedom to manipulate the language at run time. One such ability
+is how a programmer can intercept the control during <code>class</code> object creation and change its outlook entirely
+from what programmer intented. This is achieved through a language feature called <code>metaclass</code>.</p>
+<p><code>metaclass</code> is a class of a class. We know that in python everything is an object. Which means there is a
+<code>class</code> or <code>blueprint</code> for every object we see. In python <code>class</code> is also an object and it is created using
+<code>type</code> class and it is a metaclass. It is a built in entity and there is no way to recreate it and since it is
+a class, we can inherit it. This we will discuss in the coming sections.</p>
+<p>Let&rsquo;s analyze the code a little bit to see what we discussed is correct:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>     <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> t <span style="color:#f92672">=</span> Test()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> t<span style="color:#f92672">.</span>__class__  <span style="color:#75715e"># t is instance of class Test.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>Test<span style="color:#e6db74">&#39;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> Test<span style="color:#f92672">.</span>__class__ <span style="color:#75715e"># Test is an instance of type class.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">type</span><span style="color:#e6db74">&#39;&gt;</span>
+</span></span></code></pre></div><p>We can also instantiate <code>class</code> objects at runtime. Although it looks bit contrived but we can achieve it. The method signature to do that is: <code>type(class_name, base_classes_tupe, dict)</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init</span>(self, name, age):
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>   self<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> name
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>   self<span style="color:#f92672">.</span>age <span style="color:#f92672">=</span> age
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> Person <span style="color:#f92672">=</span> type(<span style="color:#e6db74">&#34;Person&#34;</span>, (object,), {<span style="color:#e6db74">&#34;__init__&#34;</span>: init})
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x <span style="color:#f92672">=</span> Person(<span style="color:#e6db74">&#34;hello world&#34;</span>, <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>__main__<span style="color:#f92672">.</span>Person object at <span style="color:#ae81ff">0x10c80c210</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x<span style="color:#f92672">.</span>name
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;hello world&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x<span style="color:#f92672">.</span>age
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> Person(<span style="color:#e6db74">&#34;hello world&#34;</span>, <span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y<span style="color:#f92672">.</span>age
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span>
+</span></span></code></pre></div><p>We saw that we can create <code>classes</code> at runtime using <code>type</code>. But can we manipulate the class definition when
+it is defined in the traditional/usual way ? yes we can and this is where <code>metaclass</code> and magic methods come into play.</p>
+<h2 id="metaclass-and-__new__-__init__-__call__-magic-methods">metaclass and __new__, __init__, __call__ magic methods:</h2>
+<p>We know that a <code>metaclass</code> is a class which creates classes. In python the default <code>metaclass</code> for all classes
+is <code>type</code>. And we saw how it was used to instantiate class objects. So if we as a developer want to control or
+manipulate class object creation, we have to come up with our own metaclass. Since <code>type</code> is a class, we can
+do that by inherting it.</p>
+<p>Also before we begin, the magic methods <code>__new__, __init__, __call__</code> are nothing to do with <code>metaclass</code>. You
+can define them on any class and it does not have to inherit <code>type</code> class. They all deal with objects but in
+case of <code>metaclass</code>, these objects are <code>classes</code>. We just need to keep that in mind. Also these methods
+executed in the following order: <code>__new__, __init__, __call__</code>.</p>
+<p>Without further ado, lets create our first metaclass. In this example, we will simply print the arguments these magic methods receive. This will help us understand when these methods are called. After that we will try to implement <code>singleton, factory pattern</code> and adding <code>getter and setter</code> by default to class attributes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DefaultMeta</span>(type):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># mcs is the metaclass: DefaultMeta</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># name: class name it is about to create.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># bases: parent classes defined on the class.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># attrs: attributes defined in the class: this includes class properties and methods. Attributes added in the classes __init__ method(which deals with objects of class) are not received here.</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;mcs:&#34;</span>, mcs)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;name:&#34;</span>, name)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;bases:&#34;</span>, bases)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;attrs:&#34;</span>, attrs)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, bases, attrs)  <span style="color:#75715e"># here mcs needs to be explicitly passed as first argument</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(cls, name, bases, attrs):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># same arguments except for the first argument. Here the class object is already created.</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;cls:&#34;</span>, cls)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;name:&#34;</span>, name)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;bases:&#34;</span>, bases)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;attrs:&#34;</span>, attrs)
+</span></span><span style="display:flex;"><span>    super()<span style="color:#f92672">.</span>__init__(name, bases, attrs)  <span style="color:#75715e"># __init__ here is an instance method so no need to pass `cls` in the arguments.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># called when user tries to instantiate an object: ClassName(*args, **kwargs)</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;args:&#34;</span>, args)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;kwargs:&#34;</span>, kwargs)
+</span></span><span style="display:flex;"><span>    obj <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> obj
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>DefaultMeta):
+</span></span><span style="display:flex;"><span>  some_prop <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>():
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mcs: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>DefaultMeta<span style="color:#e6db74">&#39;&gt;</span>
+</span></span><span style="display:flex;"><span>name: Test
+</span></span><span style="display:flex;"><span>bases: ()
+</span></span><span style="display:flex;"><span>attrs: {<span style="color:#e6db74">&#39;__module__&#39;</span>: <span style="color:#e6db74">&#39;__main__&#39;</span>, <span style="color:#e6db74">&#39;__qualname__&#39;</span>: <span style="color:#e6db74">&#39;Test&#39;</span>, <span style="color:#e6db74">&#39;some_prop&#39;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#39;test&#39;</span>: <span style="color:#f92672">&lt;</span>function Test<span style="color:#f92672">.</span>test at <span style="color:#ae81ff">0x10c7f4dd0</span><span style="color:#f92672">&gt;</span>}
+</span></span><span style="display:flex;"><span>cls: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>Test<span style="color:#e6db74">&#39;&gt;</span>
+</span></span><span style="display:flex;"><span>name: Test
+</span></span><span style="display:flex;"><span>bases: ()
+</span></span><span style="display:flex;"><span>attrs: {<span style="color:#e6db74">&#39;__module__&#39;</span>: <span style="color:#e6db74">&#39;__main__&#39;</span>, <span style="color:#e6db74">&#39;__qualname__&#39;</span>: <span style="color:#e6db74">&#39;Test&#39;</span>, <span style="color:#e6db74">&#39;some_prop&#39;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#39;test&#39;</span>: <span style="color:#f92672">&lt;</span>function Test<span style="color:#f92672">.</span>test at <span style="color:#ae81ff">0x10c7f4dd0</span><span style="color:#f92672">&gt;</span>}
+</span></span></code></pre></div><p>So you can see that as soon as interpreter encountered the class definition, it invoked our metaclass to create it. The steps could go something like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Test <span style="color:#f92672">=</span> DefaultMeta<span style="color:#f92672">.</span>__new__(DefaultMeta, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
+</span></span><span style="display:flex;"><span>DefaultMeta<span style="color:#f92672">.</span>__init__(Test, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
+</span></span></code></pre></div><p><code>__call__</code> will be called when you try to create an object of <code>Test</code>.</p>
+<p>Just for fun what we can do is, create a <code>RogueMeta</code> class which simply wipes out all the attributes from the
+class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RogueMeta</span>(type):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, (), {})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>RogueMeta):
+</span></span><span style="display:flex;"><span>    some_prop <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, x):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>():
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>z <span style="color:#f92672">=</span> Test(<span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>print(z<span style="color:#f92672">.</span>x)
+</span></span></code></pre></div><p>you should get this error when you execute the above code block:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#e6db74">&#34;./test.py&#34;</span>, line <span style="color:#ae81ff">16</span>, <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    z <span style="color:#f92672">=</span> Test(<span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">TypeError</span>: Test() takes no arguments
+</span></span></code></pre></div><p>Remember we can&rsquo;t achieve this in <code>__init__</code> method because class is already created by that time. So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside <code>__init__</code> method.</p>
+<h2 id="singleton-pattern-using-metaclass">Singleton pattern using metaclass:</h2>
+<p>Singleton pattern, we want to restric the instance of a class to one single instance. Mutiple call to the creation of objects should return already created object. So we need to intercept the object creation step which is <code>__call__</code> method of the metaclass. Remember <code>__new__ and __init__</code> are called when interpreter encounters the class definition and it happens only one time. <code>__call__</code> is called whenever we want to create an object of the class which is what we need in this scenario.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span>(type):
+</span></span><span style="display:flex;"><span>    _cache <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> cls <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> cls<span style="color:#f92672">.</span>_cache:
+</span></span><span style="display:flex;"><span>            cls<span style="color:#f92672">.</span>_cache[cls] <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> cls<span style="color:#f92672">.</span>_cache[cls]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>Singleton):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> Test()
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> Test()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>print(b)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># both should print the same address location.</span>
+</span></span></code></pre></div><h2 id="gettersetter-using-python-magic-methods">Getter/Setter using python magic methods.</h2>
+<p>Here we need intercept <code>__new__</code> and <code>__call__</code> methods and update object dictionaries accordingly.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> collections
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> functools
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_getter</span>(obj, key):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> obj<span style="color:#f92672">.</span>dict[key]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_setter</span>(obj, key, value):
+</span></span><span style="display:flex;"><span>    obj<span style="color:#f92672">.</span>dict[key] <span style="color:#f92672">=</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GetterSetter</span>(type):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+</span></span><span style="display:flex;"><span>        new_attributes_dict, removed_kvs <span style="color:#f92672">=</span> {}, {}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> attrs<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> isinstance(v, collections<span style="color:#f92672">.</span>Callable):
+</span></span><span style="display:flex;"><span>                new_attributes_dict[k] <span style="color:#f92672">=</span> v
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                removed_kvs[k] <span style="color:#f92672">=</span> v
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># create the class.</span>
+</span></span><span style="display:flex;"><span>        cls <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, bases, new_attributes_dict)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># store class variables in a protected dict.</span>
+</span></span><span style="display:flex;"><span>        cls<span style="color:#f92672">.</span>dict <span style="color:#f92672">=</span> removed_kvs
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># attach getter/setter methods.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> removed_kvs:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;__&#34;</span>):
+</span></span><span style="display:flex;"><span>                setattr(cls, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;get_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_getter, cls, k))
+</span></span><span style="display:flex;"><span>                setattr(cls, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;set_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_setter, cls, k))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> cls
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        obj <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>        obj<span style="color:#f92672">.</span>__dict__ <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;dict&#34;</span>: obj<span style="color:#f92672">.</span>__dict__}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> obj<span style="color:#f92672">.</span>dict:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;__&#34;</span>):
+</span></span><span style="display:flex;"><span>                setattr(obj, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;get_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_getter, obj, k))
+</span></span><span style="display:flex;"><span>                setattr(obj, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;set_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_setter, obj, k))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> obj
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>GetterSetter):
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, a, b):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>a <span style="color:#f92672">=</span> a
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>b <span style="color:#f92672">=</span> b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> Test(a<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, b<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>)
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>b())
+</span></span></code></pre></div>
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://bhimsen92.github.io/tags/python/">python</a></span>
+        
+    </p>
+
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        1188 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2021-01-03 23:37 &#43;0530
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Python%20Metaclass%20and%20It%27s%20Magic%20Methods&amp;caption=Python%20Metaclass%20and%20It%27s%20Magic%20Methods&amp;canonicalUrl=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
+    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=Python%20Metaclass%20and%20It%27s%20Magic%20Methods&amp;body=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f&amp;media=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f;description=Python%20Metaclass%20and%20It%27s%20Magic%20Methods" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f&amp;title=Python%20Metaclass%20and%20It%27s%20Magic%20Methods&amp;summary=Python%20Metaclass%20and%20It%27s%20Magic%20Methods&amp;source=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f&amp;resubmit=true&amp;title=Python%20Metaclass%20and%20It%27s%20Magic%20Methods" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f;title=Python%20Metaclass%20and%20It%27s%20Magic%20Methods" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Python%20Metaclass%20and%20It%27s%20Magic%20Methods%20https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f&amp;t=Python%20Metaclass%20and%20It%27s%20Magic%20Methods" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Python%20Metaclass%20and%20It%27s%20Magic%20Methods&amp;url=https%3a%2f%2fbhimsen92.github.io%2fposts%2f2021%2f01%2fpython-metaclass-and-its-magic-methods%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+    <div class="pagination">
+        
+        <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+        </div>
+        
+
+        <div class="pagination__buttons">
+            
+            <span class="button previous">
+                <a href="https://bhimsen92.github.io/posts/2021/01/rabbitmq-tutorial/">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">Rabbitmq Tutorial</span>
+                </a>
+            </span>
+            
+
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://bhimsen92.github.io/bundle.min.ac2a4bcaed631ec2dc154407be7f09fc28da37de71fae6dee6711b2a3d1622770f87d3cda22c460e9a68ff619bdb1dd75cb7a5d33f159a54e419736cc4541087.js" integrity="sha512-rCpLyu1jHsLcFUQHvn8J/CjaN95x&#43;ube5nEbKj0WIncPh9PNoixGDppo/2Gb2x3XXLel0z8VmlTkGXNsxFQQhw=="></script>
+
+
+
+
+    </body>
+</html>

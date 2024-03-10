@@ -1,0 +1,474 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Bheemsen Kulkarni</title>
+        <link>https://bhimsen92.github.io/posts/</link>
+        <description>Recent content in Posts on Bheemsen Kulkarni</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+        <lastBuildDate>Thu, 22 Jun 2023 01:20:00 +0530</lastBuildDate>
+        <atom:link href="https://bhimsen92.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>A Template for System Design</title>
+            <link>https://bhimsen92.github.io/posts/2023/06/a-template-for-system-design/</link>
+            <pubDate>Thu, 22 Jun 2023 01:20:00 +0530</pubDate>
+            
+            <guid>https://bhimsen92.github.io/posts/2023/06/a-template-for-system-design/</guid>
+            <description>Designing a software system is difficult, especially when you don&amp;rsquo;t have a plan or a set of instructions. But once you have a plan to guide you, it becomes easier to solve the problem step by step. In this blog, I will share a few things I learned from reading online and my own experience about how to approach system design questions at work or in interviews.
+Problem statement To begin, it is important to accurately define the problem statement.</description>
+            <content type="html"><![CDATA[<p>Designing a software system is difficult, especially when you don&rsquo;t have a plan or a set of instructions. But once you have a plan to guide you, it becomes easier to solve the problem step by step. In this blog, I will share a few things I learned from reading online and my own experience about how to approach system design questions at work or in interviews.</p>
+<h2 id="problem-statement">Problem statement</h2>
+<p>To begin, it is important to accurately define the problem statement. This involves providing context about the problem and explaining the reasons for solving it. It is crucial to address the &ldquo;why&rdquo; behind the problem, including its consequences and impact.</p>
+<p>When writing a technical design document, it is beneficial to offer background information and discuss existing solutions. This helps to provide a comprehensive understanding of the problem and its current state.</p>
+<p>Lastly, it is helpful to briefly describe the desired outcome of the tech document or system design. By implementing the proposed solution, users will no longer encounter the previously mentioned issue.</p>
+<h2 id="listing-down-assumptions">Listing Down Assumptions</h2>
+<p>This step is important for setting the right expectations. When you start building something, there are certain things you assume to be true. Here are a couple of examples:</p>
+<ol>
+<li>
+<p>For instance, let&rsquo;s say your design relies on using specific tools like Kubernetes (k8s) or AWS, as it needs to utilize their internal features.</p>
+</li>
+<li>
+<p>Another example could be if a company has its own ongoing architecture development. In your design, you assume that your solution will work only if that specific architecture is in place.</p>
+</li>
+</ol>
+<p>By stating these assumptions from the beginning, it ensures that everyone understands what is needed and what limitations exist for the project.</p>
+<h2 id="risk-and-open-items">Risk and Open Items</h2>
+<p>In this step, you outline the challenges or potential issues that your project may encounter. Since assumptions were made in the previous steps, there are some associated risks, such as:</p>
+<ol>
+<li>
+<p>The API you rely on might lack proper documentation or support. This could result in project delays and difficulties in implementing your solution.</p>
+</li>
+<li>
+<p>An &ldquo;open item&rdquo; refers to any pending work that needs to be completed before you can begin working on your project. It acts as a prerequisite or dependency for your project to progress.</p>
+</li>
+</ol>
+<p>By identifying and acknowledging these challenges and open items, you can plan for them in advance and mitigate any setbacks or obstacles that may arise during the project.</p>
+<h2 id="high-level-design">High Level Design</h2>
+<p>In this step, you will create a basic diagram that outlines the main components of your system and how they interact. The diagram provides a high-level overview without going into too much details, helping stakeholders visualize the overall architecture and information flow. Focus on the major components and their interactions, keeping it simple and straightforward.</p>
+<h2 id="high-level-description">High Level Description</h2>
+<p>In this step, you will describe your solution using the components identified in the high-level design. For example, if your solution is a web application, you would explain how a request flows through your design and generates a response. This involves explaining the purpose and functionality of each individual component.</p>
+<hr>
+<p>Now that you have a basic working solution, it is crucial to evaluate its robustness before seeking feedback. Take a moment to consider various scenarios and error situations that could potentially disrupt your design. By proactively identifying and addressing these issues, you demonstrate thoroughness and preparedness when sharing your design with others. This approach prevents wasting others&rsquo; time by avoiding glaring issues that may arise, such as handling excessive requests. By anticipating and resolving potential problems beforehand, you can present a more robust and reliable design to receive valuable feedback.</p>
+<p>To refine your design, you can follow the steps below:</p>
+<ol>
+<li>
+<p>Consider the possibility of data inconsistency or an inconsistent system state due to failures or errors. Determine if you need to implement transactions or a SAGA (Saga pattern) to maintain data integrity and consistency.</p>
+</li>
+<li>
+<p>Address the risk of creating duplicate records in your system. Ensure that appropriate measures are in place to prevent the creation of duplicate entries.</p>
+</li>
+<li>
+<p>Evaluate how your system will handle database loads. Consider both read-heavy and write-heavy scenarios and design strategies to efficiently handle these workloads.</p>
+<p>a. For read-heavy scenarios, implement caching mechanisms to reduce database load and improve response times.</p>
+<p>b. For write-heavy scenarios, use techniques like sharding or partitioning, or consider implementing asynchronous processing to handle high write volumes.</p>
+</li>
+<li>
+<p>Plan for potential database crashes, both primary and secondary instances. Establish backup and recovery mechanisms to ensure data integrity and minimize downtime.</p>
+</li>
+<li>
+<p>If your design includes caching, consider the possibility of cache failures or crashes. Implement fault-tolerant caching mechanisms to avoid such failures.</p>
+</li>
+<li>
+<p>Think about the impact of increased server load beyond anticipated levels. Design your system to handle scalability by implementing strategies like horizontal scaling, load balancing, and rate-limiting to ensure optimal performance under high load conditions.</p>
+</li>
+<li>
+<p>Think about the possibility of web server or application server crashes. Implement redundancy and failover mechanisms to provide HA(high availability).</p>
+</li>
+<li>
+<p>Address any potential latency issues in your system. Optimize network communication, database querie to minimize response times.</p>
+</li>
+<li>
+<p>Evaluate whether all operations in your system need to be synchronous. Explore opportunities to make certain operations asynchronous to improve system responsiveness and scalability.</p>
+</li>
+<li>
+<p>Identify any performance bottlenecks and find ways to make your system faster. Optimize algorithms, improve database indexing, utilize caching techniques etc.</p>
+</li>
+</ol>
+<p>Once your design has been refined, please share the design document with your peers to gather their feedback. However, it is important not to rush the process of creating the document. It is recommended to allocate a minimum of one week for designing the document, and it is advised not to settle for less time.</p>
+<p>When refining your design to handle potential error scenarios, it is crucial to avoid imagining non-existent problems or scenarios that are unlikely to occur. By doing so, you can prevent the creation of overly complex and potentially costly designs that are unnecessary. It is important to consider the trade-offs and not strive for perfection. As long as your solution delivers the intended features and does not inconvenience the user, it is considered good enough. Avoid incorporating fancy patterns or technologies merely for the sake of it.</p>
+<h2 id="low-level-design">Low Level Design</h2>
+<p>Once done, start working on low level design. This would involve:</p>
+<ol>
+<li>Desribing invidual components or modules.</li>
+<li>Design API interface.</li>
+<li>Writing down sequence diagram to show how these components describe.</li>
+</ol>
+<h2 id="come-up-with-milestones">Come up with Milestones</h2>
+<p>Milestones serve as checkpoints to showcase the progress and achievements of a project. Each milestone represents a significant deliverable that marks a specific stage of completion. Here are some examples of milestones in the context of software development:</p>
+<ol>
+<li>Gathering the requirements.</li>
+<li>Designign the high level solution and reviewing</li>
+<li>Implementing modules as described in the low level design.</li>
+</ol>
+<h2 id="deployment-details">Deployment details</h2>
+<p>If the company already has a common deployment strategy in place, it is possible to skip the deployment section as it aligns with the existing practices. However, if it is a hobby or personal project where no established deployment strategy exists, it becomes important to describe how the designed solution will be deployed.</p>
+<p>I hope these guidlines will help you to streamline your thoughts while designing the system and also helps you to build robust systems.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Learnings From Work and Life</title>
+            <link>https://bhimsen92.github.io/posts/2023/05/learnings-from-work-and-life/</link>
+            <pubDate>Wed, 03 May 2023 10:54:00 +0530</pubDate>
+            
+            <guid>https://bhimsen92.github.io/posts/2023/05/learnings-from-work-and-life/</guid>
+            <description>As a sofware engineer with ten years of experience, I have seen many ups and downs. This has taught me many things both professionally and personally. Here is a summary of those learnings.
+If you possess knowledge, it is impossible for anyone to deceive or trick you. Follow Boys Scout Rule as much as possible. Learn about XY problem and avoid following into its traps. 5 Whys technique can be effective in preventing the XY problem.</description>
+            <content type="html"><![CDATA[<p>As a sofware engineer with ten years of experience, I have seen many ups and downs. This has taught me many things
+both professionally and personally. Here is a summary of those learnings.</p>
+<ol>
+<li>If you possess knowledge, it is impossible for anyone to deceive or trick you.</li>
+<li>Follow <a href="https://97-things-every-x-should-know.gitbooks.io/97-things-every-programmer-should-know/content/en/thing_08/">Boys Scout Rule</a> as much as possible.</li>
+<li>Learn about <a href="https://xyproblem.info/">XY problem</a> and avoid following into its <a href="https://meta.stackexchange.com/a/66378">traps</a>.
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Five_whys">5 Whys</a> technique can be effective in preventing the XY problem.</li>
+</ol>
+</li>
+<li>Take ownership.</li>
+<li>Write test cases always.</li>
+<li>Instead of attempting to impress others, focus on performing your work to the best of your ability regardless of the circumstances.</li>
+<li>Stay away from toxic people.
+<ol>
+<li>Read <a href="https://www.amazon.com/Asshole-Survival-Guide-People-Treat/dp/1328695913">Asshole survival guide</a> book.</li>
+</ol>
+</li>
+<li>Don&rsquo;t make promises but if you do, don&rsquo;t break them.</li>
+<li>Always underestimate and overperform than overesitmate and underform. Optics matter.</li>
+<li>Stay away from office politics.</li>
+<li>When approaching problem-solving, it is advisable to adhere to first principles.</li>
+<li>Take feedback/criticism serioulsy.
+<ol>
+<li>Prepare action items to overcome your shortcomings.</li>
+<li>It may take time to overcome these shortcomings but don&rsquo;t lose hope.</li>
+</ol>
+</li>
+<li>Don&rsquo;t take praise seriously and never let that boost your ego.</li>
+<li>You may be a slow learner but that is fine as long as you are making the progress.</li>
+<li>And finally, live your life. Job is a means to an end, don&rsquo;t stress too much.</li>
+</ol>
+]]></content>
+        </item>
+        
+        <item>
+            <title>How To Learn New Programming Language Quickly</title>
+            <link>https://bhimsen92.github.io/posts/2023/01/how-to-learn-new-programming-language-quickly/</link>
+            <pubDate>Fri, 27 Jan 2023 22:50:00 +0530</pubDate>
+            
+            <guid>https://bhimsen92.github.io/posts/2023/01/how-to-learn-new-programming-language-quickly/</guid>
+            <description>Our job requires us to learn new programming languages once in a while. Some languages are easy while others have steep learning curve. I would have wished if there was a templte for learning languages because each language has similar concepts but with different syntax. Once you understand what is common between the language you know and the language you want to learn, all that is left is to master the syntax which comes with some practice.</description>
+            <content type="html"><![CDATA[<p>Our job requires us to learn new programming languages once in a while. Some languages are easy while others have steep learning curve. I would have wished if there was a templte for learning languages because each language has similar concepts but with different syntax. Once you understand what is common between the language you know and the language you want to learn, all that is left is to master the syntax which comes with some practice. This document tries to encapsulate all that for the scala language and later use it to learn both Python, Rust and Java.</p>
+<p>This document expects the reader to know at least one programming language and have some idea of what OOP(Object Oriented Programming) and Function Programming means.</p>
+<p>What is a programming language ? Though I don’t know the textbook definition, in my opinion a programming language is a system(of notations) which has facilities to represent real world entities and manipulate them using predefined or custom operations to produce a result.</p>
+<p>Based on the above definition, it is very easy to deduce that every programming language should have few things or sometime more in common. So first we list down all things that are common between languages. Later we will diverge based on whether the language is an OO(object oriented) or functional language.</p>
+<h2 id="language-learning-template">Language Learning Template</h2>
+<ol>
+<li>Build and Dependency management: How to build and load dependencies for your project.</li>
+<li>Primitive data types to represent real world data. Real world is made up of numbers and characters(strings).</li>
+<li>Operations.</li>
+<li>Custom data types to represent complex real world entities. From here onwards called objects.</li>
+<li>Ways to define variables and constants.</li>
+<li>Constructs for looping and branching.</li>
+<li>Functions or methods to encapsulate a block of code or steps.</li>
+<li>Modules or packages or namespaces to organise code into logical groups.</li>
+<li>Collections or data structures to simplify programming.</li>
+</ol>
+<h3 id="if-the-language-supports-object-oriented-programming-then-it-should-have">If the language supports object oriented programming then it should have:</h3>
+<ol start="10">
+<li>Classes and objects to represent real world entities.</li>
+<li>Inheritance: A way to create new classes using existing classes.</li>
+<li>Interface: A technique to build abstractions. It allows you to define operations or methods without their implementation. [not all languages support this feature]</li>
+<li>Multiple Inheritance. [not all languages support this feature]</li>
+</ol>
+<h3 id="if-the-language-is-functional-language">If the language is Functional language:</h3>
+<ol start="14">
+<li>Supports functions as first class objects. That is, there is no difference between regular values and functions. They can be assigned, passed to functions and can be returned from functions.</li>
+<li>As a consequence of the above statement, support for Higher order functions.</li>
+<li>Closure.</li>
+<li>Immutable data structures or a way to define immutable values.</li>
+<li>Tail recursion.</li>
+</ol>
+<h3 id="threading-and-multi-process-computations">Threading and Multi Process computations:</h3>
+<ol start="19">
+<li>Ability to create threads and handle concurrent computation.</li>
+<li>Locks and other ways to protect critical sections of the code.</li>
+<li>Support for asynchronous programming.</li>
+</ol>
+<p>In the upcoming posts, we will use the above template to learn Scala, Go, Rust and Java.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Rabbitmq Tutorial</title>
+            <link>https://bhimsen92.github.io/posts/2021/01/rabbitmq-tutorial/</link>
+            <pubDate>Wed, 20 Jan 2021 05:27:22 +0530</pubDate>
+            
+            <guid>https://bhimsen92.github.io/posts/2021/01/rabbitmq-tutorial/</guid>
+            <description>Before I write about Rabbitmq, let&amp;rsquo;s briefly talk about what message queues are in the first place. Message Queue is a programming paradigm which is used for inter process communication where proceses are running either on the same machine or on different machines.
+When your design requires loose coupling between components, a part of your solution has a cpu intensive operation which can be delgated to a background process, you have to notify multiple components of a certain event then message queue is the solution that you would like to consider for your project.</description>
+            <content type="html"><![CDATA[<p>Before I write about Rabbitmq, let&rsquo;s briefly talk about what message queues are in the first place.
+<strong>Message Queue</strong> is a programming paradigm which is used for inter process communication where proceses are running either on the same machine or on different machines.</p>
+<p>When your design requires loose coupling between components, a part of your solution has a cpu intensive operation which can be delgated to a background process, you have to notify multiple components of a certain event then message queue is the solution that you would like to consider for your project.</p>
+<p>Any software which implements message queueing paradigm has three basic components:</p>
+<ul>
+<li><em>Producer</em>: A process which produces messages and adds it to a queue.</li>
+<li><em>Queue</em>: A buffer where messages are stored before being read by the consumer process.</li>
+<li><em>Consumer</em>: A process which reads messages and does some action based on it.</li>
+</ul>
+<h3 id="rabbitmq">Rabbitmq</h3>
+<p>Rabbitmq is a message queueing software built by Pivotal software. It uses <a href="https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">AMQP</a> message protocol to communicate between the components(producer,consumer).</p>
+<h3 id="when-to-use-rabbitmq">When to use Rabbitmq</h3>
+<ul>
+<li>When you need dumb clients and a smart broker. This includes complex routing(we will talk about this when we discuss <strong>Exchanges</strong>), dead-lettering(handling unacked, ttl expired messages), priorities within the queue.</li>
+<li>When you want to persist data when consumers are not around.</li>
+</ul>
+<h3 id="basic-structure">Basic Structure</h3>
+<p><img alt="RabbitMQ Basic Structure" src="/img/rabbitmq.png#center"></p>
+<h3 id="rabbitmq-concepts">Rabbitmq Concepts</h3>
+<ul>
+<li>
+<p><strong>Queue</strong>: Buffer to store incoming messages until a consumer application process it.</p>
+</li>
+<li>
+<p><strong>Routing Key</strong>: It is like an address which the exchange uses it to deliver it to appropriate queue.</p>
+</li>
+<li>
+<p><strong>Binding Key</strong>: A pattern/string which is used link a queue with an exchange. When the routing key matches the binding key, the exchange delivers the message. If routing key does not match any binding key defined on the exchange, then the message is discarded.</p>
+</li>
+<li>
+<p><strong>Exchanges</strong>: In rabbitmq, the producer never sends any message directly to a queue. This makes sense as rabbitmq needs to handle complex routing patterns. So we need an entity that can receive the message and based on the routing key and exchange type deliver the message to appropriate queues. The task of an exchange is simple: it receives the message from the producer from one side and pushes it to a queue on the other side where routing key matches the binding queue. If multiple queues keys are matched then the <strong>message will be copied</strong> and sent to all the queues.</p>
+<p>Types of exchange types supported in rabbitmq:</p>
+<ul>
+<li>direct</li>
+<li>fanout</li>
+<li>topic</li>
+<li>header</li>
+</ul>
+<p>All these types will be explained in the example section.</p>
+</li>
+<li>
+<p>Persistence and Durability: When you create a queue or an exchange, you can mark it as durable so that they are not deleted between process restarts. To make a message persist you need send <code>deliver_mode=2</code> while publishing the message to an exchange.</p>
+</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p>First let us deploy a rabbitmq instance on our machine. We will use docker container to accomplish that. We will be using python&rsquo;s <code>pika</code> client to communicate with the broker.</p>
+<pre tabindex="0"><code>docker run \
+  --name rabbitmq \
+  -h rabbitmq \
+  -e RABBITMQ_DEFAULT_USER=admin \
+  -e RABBITMQ_DEFAULT_PASS=password \
+  -p 15672:15672 \
+  -p 5672:5672 \
+  -v &lt;host_path&gt;:/var/lib/rabbitmq \
+  -d \
+  rabbitmq:3-management
+</code></pre><p>Once deployed you can access managment website at <code>http://localhost:15672</code>. Management UI of rabbitmq is pretty self explanatory. Exchange and Queue has there own tabs where we can create these entities and manage them later on. It also provides way to look at the stats such as message rates, total messages, number of messages ready to be delivered etc.</p>
+<h4 id="direct-exchange">Direct Exchange</h4>
+<p>To demostrate we will create one exchange called <code>logs</code> with durable set to <code>true</code>. We will also create three queues, two queues will be bound by <code>info,debug</code> binding keys and the last one will be bound by <code>error</code> key. So head over to management console and create the exchange and the queues(queue name can be anything).</p>
+<h4 id="topic-exchange">Topic Exchange</h4>
+<p>TBD.</p>
+<h4 id="fanout-exchange">Fanout Exchange</h4>
+<p>TBD.</p>
+<p>Thank you very much for reading this post :)</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Python Metaclass and It&#39;s Magic Methods</title>
+            <link>https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/</link>
+            <pubDate>Sun, 03 Jan 2021 23:37:10 +0530</pubDate>
+            
+            <guid>https://bhimsen92.github.io/posts/2021/01/python-metaclass-and-its-magic-methods/</guid>
+            <description>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&amp;rsquo;s power comes from its ability to give the developers the freedom to manipulate the language at run time. One such ability is how a programmer can intercept the control during class object creation and change its outlook entirely from what programmer intented. This is achieved through a language feature called metaclass.
+metaclass is a class of a class.</description>
+            <content type="html"><![CDATA[<p>Python is one of my favourite language. It is very intuitive, simple and a powerful language. It&rsquo;s power comes
+from its ability to give the developers the freedom to manipulate the language at run time. One such ability
+is how a programmer can intercept the control during <code>class</code> object creation and change its outlook entirely
+from what programmer intented. This is achieved through a language feature called <code>metaclass</code>.</p>
+<p><code>metaclass</code> is a class of a class. We know that in python everything is an object. Which means there is a
+<code>class</code> or <code>blueprint</code> for every object we see. In python <code>class</code> is also an object and it is created using
+<code>type</code> class and it is a metaclass. It is a built in entity and there is no way to recreate it and since it is
+a class, we can inherit it. This we will discuss in the coming sections.</p>
+<p>Let&rsquo;s analyze the code a little bit to see what we discussed is correct:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>     <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> t <span style="color:#f92672">=</span> Test()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> t<span style="color:#f92672">.</span>__class__  <span style="color:#75715e"># t is instance of class Test.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>Test<span style="color:#e6db74">&#39;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> Test<span style="color:#f92672">.</span>__class__ <span style="color:#75715e"># Test is an instance of type class.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">type</span><span style="color:#e6db74">&#39;&gt;</span>
+</span></span></code></pre></div><p>We can also instantiate <code>class</code> objects at runtime. Although it looks bit contrived but we can achieve it. The method signature to do that is: <code>type(class_name, base_classes_tupe, dict)</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init</span>(self, name, age):
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>   self<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> name
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>   self<span style="color:#f92672">.</span>age <span style="color:#f92672">=</span> age
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> Person <span style="color:#f92672">=</span> type(<span style="color:#e6db74">&#34;Person&#34;</span>, (object,), {<span style="color:#e6db74">&#34;__init__&#34;</span>: init})
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x <span style="color:#f92672">=</span> Person(<span style="color:#e6db74">&#34;hello world&#34;</span>, <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span>__main__<span style="color:#f92672">.</span>Person object at <span style="color:#ae81ff">0x10c80c210</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x<span style="color:#f92672">.</span>name
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;hello world&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x<span style="color:#f92672">.</span>age
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> Person(<span style="color:#e6db74">&#34;hello world&#34;</span>, <span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y<span style="color:#f92672">.</span>age
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">200</span>
+</span></span></code></pre></div><p>We saw that we can create <code>classes</code> at runtime using <code>type</code>. But can we manipulate the class definition when
+it is defined in the traditional/usual way ? yes we can and this is where <code>metaclass</code> and magic methods come into play.</p>
+<h2 id="metaclass-and-__new__-__init__-__call__-magic-methods">metaclass and __new__, __init__, __call__ magic methods:</h2>
+<p>We know that a <code>metaclass</code> is a class which creates classes. In python the default <code>metaclass</code> for all classes
+is <code>type</code>. And we saw how it was used to instantiate class objects. So if we as a developer want to control or
+manipulate class object creation, we have to come up with our own metaclass. Since <code>type</code> is a class, we can
+do that by inherting it.</p>
+<p>Also before we begin, the magic methods <code>__new__, __init__, __call__</code> are nothing to do with <code>metaclass</code>. You
+can define them on any class and it does not have to inherit <code>type</code> class. They all deal with objects but in
+case of <code>metaclass</code>, these objects are <code>classes</code>. We just need to keep that in mind. Also these methods
+executed in the following order: <code>__new__, __init__, __call__</code>.</p>
+<p>Without further ado, lets create our first metaclass. In this example, we will simply print the arguments these magic methods receive. This will help us understand when these methods are called. After that we will try to implement <code>singleton, factory pattern</code> and adding <code>getter and setter</code> by default to class attributes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DefaultMeta</span>(type):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># mcs is the metaclass: DefaultMeta</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># name: class name it is about to create.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># bases: parent classes defined on the class.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># attrs: attributes defined in the class: this includes class properties and methods. Attributes added in the classes __init__ method(which deals with objects of class) are not received here.</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;mcs:&#34;</span>, mcs)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;name:&#34;</span>, name)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;bases:&#34;</span>, bases)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;attrs:&#34;</span>, attrs)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, bases, attrs)  <span style="color:#75715e"># here mcs needs to be explicitly passed as first argument</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(cls, name, bases, attrs):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># same arguments except for the first argument. Here the class object is already created.</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;cls:&#34;</span>, cls)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;name:&#34;</span>, name)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;bases:&#34;</span>, bases)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;attrs:&#34;</span>, attrs)
+</span></span><span style="display:flex;"><span>    super()<span style="color:#f92672">.</span>__init__(name, bases, attrs)  <span style="color:#75715e"># __init__ here is an instance method so no need to pass `cls` in the arguments.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># called when user tries to instantiate an object: ClassName(*args, **kwargs)</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;args:&#34;</span>, args)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;kwargs:&#34;</span>, kwargs)
+</span></span><span style="display:flex;"><span>    obj <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> obj
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>DefaultMeta):
+</span></span><span style="display:flex;"><span>  some_prop <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>():
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mcs: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>DefaultMeta<span style="color:#e6db74">&#39;&gt;</span>
+</span></span><span style="display:flex;"><span>name: Test
+</span></span><span style="display:flex;"><span>bases: ()
+</span></span><span style="display:flex;"><span>attrs: {<span style="color:#e6db74">&#39;__module__&#39;</span>: <span style="color:#e6db74">&#39;__main__&#39;</span>, <span style="color:#e6db74">&#39;__qualname__&#39;</span>: <span style="color:#e6db74">&#39;Test&#39;</span>, <span style="color:#e6db74">&#39;some_prop&#39;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#39;test&#39;</span>: <span style="color:#f92672">&lt;</span>function Test<span style="color:#f92672">.</span>test at <span style="color:#ae81ff">0x10c7f4dd0</span><span style="color:#f92672">&gt;</span>}
+</span></span><span style="display:flex;"><span>cls: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#f92672">.</span>Test<span style="color:#e6db74">&#39;&gt;</span>
+</span></span><span style="display:flex;"><span>name: Test
+</span></span><span style="display:flex;"><span>bases: ()
+</span></span><span style="display:flex;"><span>attrs: {<span style="color:#e6db74">&#39;__module__&#39;</span>: <span style="color:#e6db74">&#39;__main__&#39;</span>, <span style="color:#e6db74">&#39;__qualname__&#39;</span>: <span style="color:#e6db74">&#39;Test&#39;</span>, <span style="color:#e6db74">&#39;some_prop&#39;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#39;test&#39;</span>: <span style="color:#f92672">&lt;</span>function Test<span style="color:#f92672">.</span>test at <span style="color:#ae81ff">0x10c7f4dd0</span><span style="color:#f92672">&gt;</span>}
+</span></span></code></pre></div><p>So you can see that as soon as interpreter encountered the class definition, it invoked our metaclass to create it. The steps could go something like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Test <span style="color:#f92672">=</span> DefaultMeta<span style="color:#f92672">.</span>__new__(DefaultMeta, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
+</span></span><span style="display:flex;"><span>DefaultMeta<span style="color:#f92672">.</span>__init__(Test, <span style="color:#e6db74">&#34;Test&#34;</span>, (object,), {<span style="color:#e6db74">&#34;some_prop&#34;</span>: <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;test&#34;</span>: func_ref})
+</span></span></code></pre></div><p><code>__call__</code> will be called when you try to create an object of <code>Test</code>.</p>
+<p>Just for fun what we can do is, create a <code>RogueMeta</code> class which simply wipes out all the attributes from the
+class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RogueMeta</span>(type):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, (), {})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>RogueMeta):
+</span></span><span style="display:flex;"><span>    some_prop <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, x):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>():
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>z <span style="color:#f92672">=</span> Test(<span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>print(z<span style="color:#f92672">.</span>x)
+</span></span></code></pre></div><p>you should get this error when you execute the above code block:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#e6db74">&#34;./test.py&#34;</span>, line <span style="color:#ae81ff">16</span>, <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    z <span style="color:#f92672">=</span> Test(<span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">TypeError</span>: Test() takes no arguments
+</span></span></code></pre></div><p>Remember we can&rsquo;t achieve this in <code>__init__</code> method because class is already created by that time. So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside <code>__init__</code> method.</p>
+<h2 id="singleton-pattern-using-metaclass">Singleton pattern using metaclass:</h2>
+<p>Singleton pattern, we want to restric the instance of a class to one single instance. Mutiple call to the creation of objects should return already created object. So we need to intercept the object creation step which is <code>__call__</code> method of the metaclass. Remember <code>__new__ and __init__</code> are called when interpreter encounters the class definition and it happens only one time. <code>__call__</code> is called whenever we want to create an object of the class which is what we need in this scenario.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span>(type):
+</span></span><span style="display:flex;"><span>    _cache <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> cls <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> cls<span style="color:#f92672">.</span>_cache:
+</span></span><span style="display:flex;"><span>            cls<span style="color:#f92672">.</span>_cache[cls] <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> cls<span style="color:#f92672">.</span>_cache[cls]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>Singleton):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> Test()
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> Test()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>print(b)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># both should print the same address location.</span>
+</span></span></code></pre></div><h2 id="gettersetter-using-python-magic-methods">Getter/Setter using python magic methods.</h2>
+<p>Here we need intercept <code>__new__</code> and <code>__call__</code> methods and update object dictionaries accordingly.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> collections
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> functools
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_getter</span>(obj, key):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> obj<span style="color:#f92672">.</span>dict[key]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_setter</span>(obj, key, value):
+</span></span><span style="display:flex;"><span>    obj<span style="color:#f92672">.</span>dict[key] <span style="color:#f92672">=</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GetterSetter</span>(type):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __new__(mcs, name, bases, attrs):
+</span></span><span style="display:flex;"><span>        new_attributes_dict, removed_kvs <span style="color:#f92672">=</span> {}, {}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> attrs<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> isinstance(v, collections<span style="color:#f92672">.</span>Callable):
+</span></span><span style="display:flex;"><span>                new_attributes_dict[k] <span style="color:#f92672">=</span> v
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                removed_kvs[k] <span style="color:#f92672">=</span> v
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># create the class.</span>
+</span></span><span style="display:flex;"><span>        cls <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__new__(mcs, name, bases, new_attributes_dict)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># store class variables in a protected dict.</span>
+</span></span><span style="display:flex;"><span>        cls<span style="color:#f92672">.</span>dict <span style="color:#f92672">=</span> removed_kvs
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># attach getter/setter methods.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> removed_kvs:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;__&#34;</span>):
+</span></span><span style="display:flex;"><span>                setattr(cls, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;get_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_getter, cls, k))
+</span></span><span style="display:flex;"><span>                setattr(cls, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;set_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_setter, cls, k))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> cls
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __call__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        obj <span style="color:#f92672">=</span> super()<span style="color:#f92672">.</span>__call__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>        obj<span style="color:#f92672">.</span>__dict__ <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;dict&#34;</span>: obj<span style="color:#f92672">.</span>__dict__}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> obj<span style="color:#f92672">.</span>dict:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;__&#34;</span>):
+</span></span><span style="display:flex;"><span>                setattr(obj, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;get_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_getter, obj, k))
+</span></span><span style="display:flex;"><span>                setattr(obj, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;set_</span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, functools<span style="color:#f92672">.</span>partial(_setter, obj, k))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> obj
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>(metaclass<span style="color:#f92672">=</span>GetterSetter):
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, a, b):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>a <span style="color:#f92672">=</span> a
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>b <span style="color:#f92672">=</span> b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> Test(a<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, b<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>)
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>b())
+</span></span></code></pre></div>]]></content>
+        </item>
+        
+    </channel>
+</rss>

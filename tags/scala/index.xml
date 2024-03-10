@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scala on Bheemsen Kulkarni</title>
+    <link>http://localhost:1313/tags/scala/</link>
+    <description>Recent content in Scala on Bheemsen Kulkarni</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Fri, 27 Jan 2023 22:50:00 +0530</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/scala/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learning Scala</title>
+      <link>http://localhost:1313/posts/2023/01/learning-scala/</link>
+      <pubDate>Fri, 27 Jan 2023 22:50:00 +0530</pubDate>
+      <guid>http://localhost:1313/posts/2023/01/learning-scala/</guid>
+      <description>In the previous post we came up with the template for learning a new language. In this post we will use it to learn Scala.&#xA;Build and Dependency Management sbt is a build and dependency management tool for Scala. If your project is managed by sbt, then your folder structure should be organised as follows:&#xA;build.sbt project/ *.scala files src/ main/ resources/ scala/ test/ resources/ scala/ sbt needs a build definition file called build.</description>
+    </item>
+  </channel>
+</rss>
