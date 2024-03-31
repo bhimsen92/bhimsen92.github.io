@@ -10,9 +10,10 @@
     Python is one of my favourite language. It is very intuitive, simple and a
     powerful language. It's power comes from its ability to give the developers
     the freedom to manipulate the language at run time. One such ability is how
-    a programmer can intercept the control during `class` object creation and
-    change its outlook entirely from what programmer intented. This is achieved
-    through a language feature called `metaclass`.
+    a programmer can intercept the control during
+    <code>class</code>
+    object creation and change its outlook entirely from what programmer
+    intented. This is achieved through a language feature called `metaclass`.
   </p>
 
   <p class="mb-4">
@@ -32,14 +33,14 @@
     Let's analyze the code a little bit to see what we discussed is correct:
     <!-- prettier-ignore-start -->
 {% code %}
-    >>> class Test:
-    ...     pass
-    ...
-    >>> t = Test()
-    >>> t.__class__  # t is instance of class Test.
-    <class '__main__.Test'>
-    >>> Test.__class__ # Test is an instance of type class.
-    <class 'type'>
+>>> class Test:
+...     pass
+...
+>>> t = Test()
+>>> t.__class__  # t is instance of class Test.
+<class '__main__.Test'>
+>>> Test.__class__ # Test is an instance of type class.
+<class 'type'>
 {% endcode %}
 <!-- prettier-ignore-end -->
 
@@ -47,21 +48,21 @@ We can also instantiate <code>class</code> objects at runtime. Although it looks
 
 <!-- prettier-ignore-start -->
 {% code %}
-    >>> def init(self, name, age):
-    ...   self.name = name
-    ...   self.age = age
-    ...
-    >>> Person = type("Person", (object,), {"__init__": init})
-    >>> x = Person("hello world", 100)
-    >>> x
-    <__main__.Person object at 0x10c80c210>
-    >>> x.name
-    'hello world'
-    >>> x.age
-    100
-    >>> y = Person("hello world", 200)
-    >>> y.age
-    200
+>>> def init(self, name, age):
+...   self.name = name
+...   self.age = age
+...
+>>> Person = type("Person", (object,), {"__init__": init})
+>>> x = Person("hello world", 100)
+>>> x
+<__main__.Person object at 0x10c80c210>
+>>> x.name
+'hello world'
+>>> x.age
+100
+>>> y = Person("hello world", 200)
+>>> y.age
+200
 {% endcode %}
 <!-- prettier-ignore-end -->
 </p>
@@ -70,7 +71,7 @@ We can also instantiate <code>class</code> objects at runtime. Although it looks
 We saw that we can create <code>classes</code> at runtime using <code>type</code>. But can we manipulate the class definition when
 it is defined in the traditional/usual way ? yes we can and this is where <code>metaclass</code> and magic methods come into play.</p>
 
-<h2>metaclass and __new__, __init__, __call__ magic methods:</h2>
+<h2 class="font-semibold text-2xl my-2 mb-2">Metaclass and <code>__new__, __init__, __call__</code> magic methods:</h2>
 
 <p class="mb-4">
 We know that a <code>metaclass</code> is a class which creates classes. In python the default `metaclass` for all classes
@@ -80,10 +81,10 @@ do that by inherting it.
 </p>
 
 <p class="mb-4">
-Also before we begin, the magic methods `__new__, __init__, __call__` are nothing to do with `metaclass`. You
+Also before we begin, the magic methods <code>__new__, __init__, __call__</code> are nothing to do with `metaclass`. You
 can define them on any class and it does not have to inherit `type` class. They all deal with objects but in
 case of `metaclass`, these objects are `classes`. We just need to keep that in mind. Also these methods
-executed in the following order: `__new__, __init__, __call__`.
+executed in the following order: <code>__new__, __init__, __call__</code>.
 </p>
 
 <p class="mb-4">
@@ -91,7 +92,7 @@ Without further ado, lets create our first metaclass. In this example, we will s
 
 <!-- prettier-ignore-start -->
 {% code %}
-    class DefaultMeta(type):
+class DefaultMeta(type):
     def __new__(mcs, name, bases, attrs):
         # mcs is the metaclass: DefaultMeta
         # name: class name it is about to create.
@@ -118,19 +119,19 @@ Without further ado, lets create our first metaclass. In this example, we will s
         obj = super().__call__(*args, **kwargs)
         return obj
 
-    class Test(metaclass=DefaultMeta):
+class Test(metaclass=DefaultMeta):
     some_prop = 100
     def test():
         print("hello world")
 
-    mcs: <class '__main__.DefaultMeta'>
-    name: Test
-    bases: ()
-    attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': <function Test.test at 0x10c7f4dd0>}
-    cls: <class '__main__.Test'>
-    name: Test
-    bases: ()
-    attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': <function Test.test at 0x10c7f4dd0>}
+mcs: <class '__main__.DefaultMeta'>
+name: Test
+bases: ()
+attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': <function Test.test at 0x10c7f4dd0>}
+cls: <class '__main__.Test'>
+name: Test
+bases: ()
+attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': <function Test.test at 0x10c7f4dd0>}
 {% endcode %}
 <!-- prettier-ignore-end -->
 
@@ -141,9 +142,9 @@ So you can see that as soon as interpreter encountered the class definition, it 
     DefaultMeta.__init__(Test, "Test", (object,), {"some_prop": 100, "test": func_ref})
 {% endcode %}
 
-`__call__` will be called when you try to create an object of `Test`.
+<code>__call__</code> will be called when you try to create an object of <code>Test</code>.
 
-Just for fun what we can do is, create a `RogueMeta` class which simply wipes out all the attributes from the
+Just for fun what we can do is, create a <code>RogueMeta</code> class which simply wipes out all the attributes from the
 class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.
 
 <!-- prettier-ignore-start -->
@@ -177,10 +178,12 @@ Traceback (most recent call last):
 TypeError: Test() takes no arguments
 {% endcode %}
 
-Remember we can't achieve this in `__init__` method because class is already created by that time. So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside `__init__` method.
+Remember we can't achieve this in `__init__` method because class is already created by that time. 
+So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside 
+<code>__init__</code> method.
 </p>
 
-<h2> Singleton pattern using metaclass:</h2>
+<h2 class="font-semibold text-2xl my-2 mb-2"> Singleton pattern using metaclass:</h2>
 
 <p class="mb-4">
 Singleton pattern, we want to restric the instance of a class to one single instance. Mutiple call to the creation of objects should return already created object. So we need to intercept the object creation step which is `__call__` method of the metaclass. Remember `__new__ and __init__` are called when interpreter encounters the class definition and it happens only one time. `__call__` is called whenever we want to create an object of the class which is what we need in this scenario.
@@ -210,7 +213,7 @@ print(b)
 </p>
 
 
-<h2>Getter/Setter using python magic methods.</h2>
+<h2 class="font-semibold text-2xl my-2 mb-2">Getter/Setter using python magic methods.</h2>
 
 <p class="mb-4">
 Here we need intercept `__new__` and `__call__` methods and update object dictionaries accordingly.
