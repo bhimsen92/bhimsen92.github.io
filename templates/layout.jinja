@@ -1,0 +1,45 @@
+{% extends "base.jinja" %}
+
+{% block body %}
+  <!-- Main content -->
+  <div class="container mx-auto py-8 flex-grow">
+    <!-- Blog post -->
+    <article class="bg-white rounded-lg shadow-md p-8">
+      <h1 class="text-3xl font-semibold text-gray-900 mb-4">
+        {% block blog_title %}
+        {% endblock %}
+      </h1>
+
+      <!-- Post metadata -->
+      {% if metadata is defined %}
+        <div class="flex items-center text-gray-600 mb-4">
+          <svg
+            class="w-4 h-4 mr-2"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            ></path>
+          </svg>
+          <span class="mr-2">Published on</span>
+          <time datetime="2024-03-31" class="font-medium">
+            {{ metadata["published_at"] }}
+          </time>
+        </div>
+      {% endif %}
+
+      <div class="max-w-4xl text-justify">
+        {% block blog_content %}
+        {% endblock %}
+      </div>
+
+      <a href="/posts" class="text-blue-500 hover:underline">Back to Posts</a>
+    </article>
+  </div>
+{% endblock %}

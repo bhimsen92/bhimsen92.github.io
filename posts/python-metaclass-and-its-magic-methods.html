@@ -1,0 +1,383 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link href="/static/css/main.css" rel="stylesheet" />
+    <style>
+      body {
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-200 text-gray-800 font-sans flex flex-col">
+    <!-- Navigation bar -->
+    <nav class="bg-blue-600 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <span class="text-white text-lg font-semibold">Blog</span>
+        <ul class="flex space-x-4">
+          <li><a href="#" class="text-white">Home</a></li>
+          <li><a href="#" class="text-white">About</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mx-auto py-8 flex-grow">
+      <!-- Blog post -->
+      <article class="bg-white rounded-lg shadow-md p-8">
+        <h1 class="text-3xl font-semibold text-gray-900 mb-4">
+          Python Metaclass and It's Magic Methods
+        </h1>
+
+        <!-- Post metadata -->
+
+        <div class="max-w-4xl text-justify">
+          <!-- Post Content -->
+          <p class="mb-4">
+            Python is one of my favourite language. It is very intuitive, simple
+            and a powerful language. It's power comes from its ability to give
+            the developers the freedom to manipulate the language at run time.
+            One such ability is how a programmer can intercept the control
+            during `class` object creation and change its outlook entirely from
+            what programmer intented. This is achieved through a language
+            feature called `metaclass`.
+          </p>
+
+          <p class="mb-4">
+            <code>metaclass</code>
+            is a class of a class. We know that in python everything is an
+            object. Which means there is a "class" or
+            <code>blueprint</code>
+            for every object we see. In python `class` is also an object and it
+            is created using
+            <code>type</code>
+            class and it is a metaclass. It is a built in entity and there is no
+            way to recreate it and since it is a class, we can inherit it. This
+            we will discuss in the coming sections.
+          </p>
+
+          <p class="mb-4">
+            Let's analyze the code a little bit to see what we discussed is
+            correct:
+            <!-- prettier-ignore-start -->
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+    >>> class Test:
+    ...     pass
+    ...
+    >>> t = Test()
+    >>> t.__class__  # t is instance of class Test.
+    <class '__main__.Test'>
+    >>> Test.__class__ # Test is an instance of type class.
+    <class 'type'>
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+<!-- prettier-ignore-end -->
+
+We can also instantiate <code>class</code> objects at runtime. Although it looks bit contrived but we can achieve it. The method signature to do that is: <code>type(class_name, base_classes_tupe, dict)</code>.
+
+<!-- prettier-ignore-start -->
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+    >>> def init(self, name, age):
+    ...   self.name = name
+    ...   self.age = age
+    ...
+    >>> Person = type("Person", (object,), {"__init__": init})
+    >>> x = Person("hello world", 100)
+    >>> x
+    <__main__.Person object at 0x10c80c210>
+    >>> x.name
+    'hello world'
+    >>> x.age
+    100
+    >>> y = Person("hello world", 200)
+    >>> y.age
+    200
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+<!-- prettier-ignore-end -->
+</p>
+
+<p class="mb-4">
+We saw that we can create <code>classes</code> at runtime using <code>type</code>. But can we manipulate the class definition when
+it is defined in the traditional/usual way ? yes we can and this is where <code>metaclass</code> and magic methods come into play.</p>
+
+<h2>metaclass and __new__, __init__, __call__ magic methods:</h2>
+
+<p class="mb-4">
+We know that a <code>metaclass</code> is a class which creates classes. In python the default `metaclass` for all classes
+is `type`. And we saw how it was used to instantiate class objects. So if we as a developer want to control or
+manipulate class object creation, we have to come up with our own metaclass. Since `type` is a class, we can
+do that by inherting it.
+</p>
+
+<p class="mb-4">
+Also before we begin, the magic methods `__new__, __init__, __call__` are nothing to do with `metaclass`. You
+can define them on any class and it does not have to inherit `type` class. They all deal with objects but in
+case of `metaclass`, these objects are `classes`. We just need to keep that in mind. Also these methods
+executed in the following order: `__new__, __init__, __call__`.
+</p>
+
+<p class="mb-4">
+Without further ado, lets create our first metaclass. In this example, we will simply print the arguments these magic methods receive. This will help us understand when these methods are called. After that we will try to implement `singleton, factory pattern` and adding `getter and setter` by default to class attributes.
+
+<!-- prettier-ignore-start -->
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+    class DefaultMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        # mcs is the metaclass: DefaultMeta
+        # name: class name it is about to create.
+        # bases: parent classes defined on the class.
+        # attrs: attributes defined in the class: this includes class properties and methods. Attributes added in the classes __init__ method(which deals with objects of class) are not received here.
+        print("mcs:", mcs)
+        print("name:", name)
+        print("bases:", bases)
+        print("attrs:", attrs)
+        return super().__new__(mcs, name, bases, attrs)  # here mcs needs to be explicitly passed as first argument
+
+    def __init__(cls, name, bases, attrs):
+        # same arguments except for the first argument. Here the class object is already created.
+        print("cls:", cls)
+        print("name:", name)
+        print("bases:", bases)
+        print("attrs:", attrs)
+        super().__init__(name, bases, attrs)  # __init__ here is an instance method so no need to pass `cls` in the arguments.
+
+    def __call__(cls, *args, **kwargs):
+        # called when user tries to instantiate an object: ClassName(*args, **kwargs)
+        print("args:", args)
+        print("kwargs:", kwargs)
+        obj = super().__call__(*args, **kwargs)
+        return obj
+
+    class Test(metaclass=DefaultMeta):
+    some_prop = 100
+    def test():
+        print("hello world")
+
+    mcs: <class '__main__.DefaultMeta'>
+    name: Test
+    bases: ()
+    attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': <function Test.test at 0x10c7f4dd0>}
+    cls: <class '__main__.Test'>
+    name: Test
+    bases: ()
+    attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': <function Test.test at 0x10c7f4dd0>}
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+<!-- prettier-ignore-end -->
+
+So you can see that as soon as interpreter encountered the class definition, it invoked our metaclass to create it. The steps could go something like this:
+
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+    Test = DefaultMeta.__new__(DefaultMeta, "Test", (object,), {"some_prop": 100, "test": func_ref})
+    DefaultMeta.__init__(Test, "Test", (object,), {"some_prop": 100, "test": func_ref})
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+
+`__call__` will be called when you try to create an object of `Test`.
+
+Just for fun what we can do is, create a `RogueMeta` class which simply wipes out all the attributes from the
+class. Though it is a useless but we can get gist of what we can achieve with the metaclasses.
+
+<!-- prettier-ignore-start -->
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+class RogueMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        return super().__new__(mcs, name, (), {})
+
+
+class Test(metaclass=RogueMeta):
+    some_prop = 100
+
+    def __init__(self, x):
+        self.x = x
+
+    def test():
+        print("hello world")
+
+
+z = Test(100)
+print(z.x)
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+<!-- prettier-ignore-end -->
+
+you should get this error when you execute the above code block:
+
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+Traceback (most recent call last):
+  File "./test.py", line 16, in <module>
+    z = Test(100)
+TypeError: Test() takes no arguments
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+
+Remember we can't achieve this in `__init__` method because class is already created by that time. So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside `__init__` method.
+</p>
+
+<h2> Singleton pattern using metaclass:</h2>
+
+<p class="mb-4">
+Singleton pattern, we want to restric the instance of a class to one single instance. Mutiple call to the creation of objects should return already created object. So we need to intercept the object creation step which is `__call__` method of the metaclass. Remember `__new__ and __init__` are called when interpreter encounters the class definition and it happens only one time. `__call__` is called whenever we want to create an object of the class which is what we need in this scenario.
+
+<!-- prettier-ignore-start -->
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+class Singleton(type):
+    _cache = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._cache:
+            cls._cache[cls] = super().__call__(*args, **kwargs)
+        return cls._cache[cls]
+
+class Test(metaclass=Singleton):
+    pass
+
+a = Test()
+b = Test()
+
+print(a)
+print(b)
+# both should print the same address location.
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+<!-- prettier-ignore-end -->
+
+</p>
+
+
+<h2>Getter/Setter using python magic methods.</h2>
+
+<p class="mb-4">
+Here we need intercept `__new__` and `__call__` methods and update object dictionaries accordingly.
+
+<!-- prettier-ignore-start -->
+
+    <!-- prettier-ignore-start -->
+    <div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow-md">
+        <pre class="p-2 rounded-lg overflow-x-auto">
+            <code class="block p-4 text-sm text-gray-800">
+    
+import collections
+import functools
+
+
+def _getter(obj, key):
+    return obj.dict[key]
+
+
+def _setter(obj, key, value):
+    obj.dict[key] = value
+
+
+class GetterSetter(type):
+    def __new__(mcs, name, bases, attrs):
+        new_attributes_dict, removed_kvs = {}, {}
+        for k, v in attrs.items():
+            if isinstance(v, collections.Callable):
+                new_attributes_dict[k] = v
+            else:
+                removed_kvs[k] = v
+        # create the class.
+        cls = super().__new__(mcs, name, bases, new_attributes_dict)
+        # store class variables in a protected dict.
+        cls.dict = removed_kvs
+        # attach getter/setter methods.
+        for k in removed_kvs:
+            if not k.startswith("__"):
+                setattr(cls, f"get_{k}", functools.partial(_getter, cls, k))
+                setattr(cls, f"set_{k}", functools.partial(_setter, cls, k))
+        return cls
+
+    def __call__(cls, *args, **kwargs):
+        obj = super().__call__(*args, **kwargs)
+        obj.__dict__ = {"dict": obj.__dict__}
+        for k in obj.dict:
+            if not k.startswith("__"):
+                setattr(obj, f"get_{k}", functools.partial(_getter, obj, k))
+                setattr(obj, f"set_{k}", functools.partial(_setter, obj, k))
+        return obj
+
+
+class Test(metaclass=GetterSetter):
+    table = {}
+
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+a = Test(a=100, b=500)
+print(a)
+print(a.b())
+
+        </code></pre></div></div>
+        <!-- prettier-ignore-end -->
+    
+<!-- prettier-ignore-end -->
+          </p>
+        </div>
+
+        <a href="/posts" class="text-blue-500 hover:underline">Back to Posts</a>
+      </article>
+    </div>
+  </body>
+</html>
