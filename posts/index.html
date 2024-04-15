@@ -7,44 +7,41 @@
     <link href="/static/css/main.css" rel="stylesheet" />
   </head>
   <body
-    class="bg-gray-200 text-gray-800 font-sans flex flex-col leading-normal tracking-normal"
+    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
   >
     <!-- Navigation bar -->
-    <nav class="bg-blue-600 p-4">
-      <div class="container mx-auto flex justify-between items-center">
-        <a href="/">
-          <span class="text-white text-lg font-semibold">Blog</span>
-        </a>
-        <ul class="flex space-x-4">
-          <li><a href="/" class="text-white">Posts</a></li>
-          <li><a href="/about.html" class="text-white">About</a></li>
-        </ul>
+    <nav class="p-4 border-b-4 border-b-orange-700">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <a href="/">
+            <span class="text-lg font-bold font-mono">Blog</span>
+          </a>
+          <a href="/">Posts</a>
+        </div>
+        <a href="/about.html">About</a>
       </div>
     </nav>
 
-    <div class="container mx-auto mt-8">
-      <article class="bg-white rounded-lg shadow-md p-8">
-        <h1 class="text-2xl font-semibold mb-4">Latest Posts</h1>
-        <ul>
-          <li class="mb-4 list-disc">
-            <a
-              href="/posts/learnings.html"
-              class="text-blue-500 hover:underline"
-            >
-              Learnings
-            </a>
-          </li>
+    <article
+      class="bg-white rounded-lg shadow-md p-8 min-h-screen h-full max-h-screen"
+    >
+      <h1 class="text-2xl font-semibold mb-4">Latest Posts</h1>
+      <ul>
+        <li class="mb-4 list-disc">
+          <a href="/posts/learnings.html" class="text-blue-500 hover:underline">
+            Learnings
+          </a>
+        </li>
 
-          <li class="mb-4 list-disc">
-            <a
-              href="/posts/python-metaclass-and-its-magic-methods.html"
-              class="text-blue-500 hover:underline"
-            >
-              Python Metaclass And Its Magic Methods
-            </a>
-          </li>
-        </ul>
-      </article>
-    </div>
+        <li class="mb-4 list-disc">
+          <a
+            href="/posts/python-metaclass-and-its-magic-methods.html"
+            class="text-blue-500 hover:underline"
+          >
+            Python Metaclass And Its Magic Methods
+          </a>
+        </li>
+      </ul>
+    </article>
   </body>
 </html>
