@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog</title>
     <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/css/default.min.css" rel="stylesheet" />
+    <script src="/static/js/highlight.min.js"></script>
   </head>
   <body
     class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
@@ -23,7 +25,7 @@
     </nav>
 
     <!-- Main content -->
-    <div class="container mx-auto flex-grow text-md">
+    <div class="container mx-auto flex-grow">
       <!-- Blog post -->
       <article class="bg-white rounded-lg shadow-md p-8">
         <h1 class="text-3xl font-semibold text-gray-900 mb-4">
@@ -32,7 +34,7 @@
 
         <!-- Post metadata -->
 
-        <div class="max-w-4xl prose text-left">
+        <div class="max-w-6xl prose text-justify">
           <!-- Post Content -->
           <p class="mb-4">
             Python is one of my favourite language. It is very intuitive, simple
@@ -66,8 +68,8 @@
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 python">
+        
 >>> class Test:
 ...     pass
 ...
@@ -76,7 +78,7 @@
 <class '__main__.Test'>
 >>> Test.__class__ # Test is an instance of type class.
 <class 'type'>
-</pre></code></div></div>
+</code></pre></div></div>
 <!-- prettier-ignore-end -->
 
 We can also instantiate <code>class</code> objects at runtime. Although it looks bit contrived but we can achieve it. The method signature to do that is: <code>type(class_name, base_classes_tupe, dict)</code>.
@@ -85,8 +87,8 @@ We can also instantiate <code>class</code> objects at runtime. Although it looks
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 python">
+        
 >>> def init(self, name, age):
 ...   self.name = name
 ...   self.age = age
@@ -102,7 +104,7 @@ We can also instantiate <code>class</code> objects at runtime. Although it looks
 >>> y = Person("hello world", 200)
 >>> y.age
 200
-</pre></code></div></div>
+</code></pre></div></div>
 <!-- prettier-ignore-end -->
 </p>
 
@@ -133,8 +135,8 @@ Without further ado, lets create our first metaclass. In this example, we will s
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 ">
+        
 class DefaultMeta(type):
     def __new__(mcs, name, bases, attrs):
         # mcs is the metaclass: DefaultMeta
@@ -175,7 +177,7 @@ cls: <class '__main__.Test'>
 name: Test
 bases: ()
 attrs: {'__module__': '__main__', '__qualname__': 'Test', 'some_prop': 100, 'test': <function Test.test at 0x10c7f4dd0>}
-</pre></code></div></div>
+</code></pre></div></div>
 <!-- prettier-ignore-end -->
 
 So you can see that as soon as interpreter encountered the class definition, it invoked our metaclass to create it. The steps could go something like this:
@@ -183,11 +185,11 @@ So you can see that as soon as interpreter encountered the class definition, it 
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 ">
+        
     Test = DefaultMeta.__new__(DefaultMeta, "Test", (object,), {"some_prop": 100, "test": func_ref})
     DefaultMeta.__init__(Test, "Test", (object,), {"some_prop": 100, "test": func_ref})
-</pre></code></div></div>
+</code></pre></div></div>
 
 <code>__call__</code> will be called when you try to create an object of <code>Test</code>.
 
@@ -198,8 +200,8 @@ class. Though it is a useless but we can get gist of what we can achieve with th
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 ">
+        
 class RogueMeta(type):
     def __new__(mcs, name, bases, attrs):
         return super().__new__(mcs, name, (), {})
@@ -217,7 +219,7 @@ class Test(metaclass=RogueMeta):
 
 z = Test(100)
 print(z.x)
-</pre></code></div></div>
+</code></pre></div></div>
 <!-- prettier-ignore-end -->
 
 you should get this error when you execute the above code block:
@@ -225,13 +227,13 @@ you should get this error when you execute the above code block:
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 ">
+        
 Traceback (most recent call last):
   File "./test.py", line 16, in <module>
     z = Test(100)
 TypeError: Test() takes no arguments
-</pre></code></div></div>
+</code></pre></div></div>
 
 Remember we can't achieve this in `__init__` method because class is already created by that time. 
 So we need to intercept just before the class object is created. Otherwise in most of the cases all heavy lifting can be done inside 
@@ -247,8 +249,8 @@ Singleton pattern, we want to restric the instance of a class to one single inst
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 ">
+        
 class Singleton(type):
     _cache = {}
 
@@ -266,7 +268,7 @@ b = Test()
 print(a)
 print(b)
 # both should print the same address location.
-</pre></code></div></div>
+</code></pre></div></div>
 <!-- prettier-ignore-end -->
 
 </p>
@@ -281,8 +283,8 @@ Here we need intercept `__new__` and `__call__` methods and update object dictio
 
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 ">
+        
 import collections
 import functools
 
@@ -334,7 +336,7 @@ class Test(metaclass=GetterSetter):
 a = Test(a=100, b=500)
 print(a)
 print(a.b())
-</pre></code></div></div>
+</code></pre></div></div>
 <!-- prettier-ignore-end -->
           </p>
         </div>
@@ -342,5 +344,9 @@ print(a.b())
         <a href="/posts" class="text-blue-500 hover:underline">Back to Posts</a>
       </article>
     </div>
+
+    <script>
+      hljs.highlightAll();
+    </script>
   </body>
 </html>

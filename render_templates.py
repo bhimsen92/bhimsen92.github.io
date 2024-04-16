@@ -4,6 +4,9 @@ import click
 from jinja2 import Environment, FileSystemLoader
 from jinja2.ext import Extension
 from jinja2 import nodes
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
 
 
 TEMPLATE_FOLDER = "templates"
@@ -16,23 +19,33 @@ class CodeBlockExtension(Extension):
     HTML_START = """
     <div class="container mx-auto my-4">
     <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <code class="block p-2 text-sm text-gray-900">
-        <pre class="p-2 rounded-lg overflow-x-auto">"""
+        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 {}">
+        """
 
-    HTML_END = """</pre></code></div></div>"""
+    HTML_END = """</code></pre></div></div>"""
 
     def parse(self, parser):
         lineno = next(parser.stream).lineno
-        body = parser.parse_statements(["name:endcode"], drop_needle=True)
 
+        args = []
+        if parser.stream.current.type == "string":
+            args = [parser.parse_expression()]
+        else:
+            args = [nodes.Const(None)]
+
+        body = parser.parse_statements(["name:endcode"], drop_needle=True)
+    
         rendered_block = nodes.CallBlock(
-            self.call_method("_render_block", []), [], [], body
+            self.call_method("_render_block", args), [], [], body
         ).set_lineno(lineno)
 
         return rendered_block
 
-    def _render_block(self, caller):
-        return self.HTML_START + caller() + self.HTML_END
+    def _render_block(self, language, caller):
+        if not language:
+            language = ''
+
+        return self.HTML_START.format(language) + caller() + self.HTML_END
 
 
 def to_blog_title(value):

@@ -659,6 +659,14 @@ video {
   max-width: 56rem;
 }
 
+.max-w-5xl {
+  max-width: 64rem;
+}
+
+.max-w-6xl {
+  max-width: 72rem;
+}
+
 .flex-grow {
   flex-grow: 1;
 }
@@ -763,6 +771,10 @@ video {
 
 .text-left {
   text-align: left;
+}
+
+.text-justify {
+  text-align: justify;
 }
 
 .font-sans {

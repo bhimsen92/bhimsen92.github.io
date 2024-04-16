@@ -32,7 +32,7 @@
   <p class="mb-4">
     Let's analyze the code a little bit to see what we discussed is correct:
     <!-- prettier-ignore-start -->
-{% code %}
+{% code 'python' %}
 >>> class Test:
 ...     pass
 ...
@@ -47,7 +47,7 @@
 We can also instantiate <code>class</code> objects at runtime. Although it looks bit contrived but we can achieve it. The method signature to do that is: <code>type(class_name, base_classes_tupe, dict)</code>.
 
 <!-- prettier-ignore-start -->
-{% code %}
+{% code 'python' %}
 >>> def init(self, name, age):
 ...   self.name = name
 ...   self.age = age

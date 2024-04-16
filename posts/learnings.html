@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog</title>
     <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/css/default.min.css" rel="stylesheet" />
+    <script src="/static/js/highlight.min.js"></script>
   </head>
   <body
     class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
@@ -23,7 +25,7 @@
     </nav>
 
     <!-- Main content -->
-    <div class="container mx-auto flex-grow text-md">
+    <div class="container mx-auto flex-grow">
       <!-- Blog post -->
       <article class="bg-white rounded-lg shadow-md p-8">
         <h1 class="text-3xl font-semibold text-gray-900 mb-4">
@@ -32,7 +34,7 @@
 
         <!-- Post metadata -->
 
-        <div class="max-w-4xl prose text-left">
+        <div class="max-w-6xl prose text-justify">
           <p class="mb-4">
             As a sofware engineer with ten years of experience, I have seen many
             ups and downs. This has taught me many things both professionally
@@ -121,5 +123,9 @@
         <a href="/posts" class="text-blue-500 hover:underline">Back to Posts</a>
       </article>
     </div>
+
+    <script>
+      hljs.highlightAll();
+    </script>
   </body>
 </html>

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog</title>
     <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/css/default.min.css" rel="stylesheet" />
+    <script src="/static/js/highlight.min.js"></script>
   </head>
   <body
     class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
@@ -24,5 +26,9 @@
 
     {% block body %}
     {% endblock %}
+
+    <script>
+      hljs.highlightAll();
+    </script>
   </body>
 </html>
