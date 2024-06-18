@@ -8,7 +8,7 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 
-from extensions import MarkdownExtension, CodeBlockExtension
+from extensions import MarkdownExtension
 
 
 TEMPLATE_FOLDER = "templates"
@@ -45,7 +45,6 @@ def render_templates():
     jinja_env.filters["to_blog_title"] = to_blog_title
     jinja_env.filters["to_html_extension"] = to_html_extension
     
-    jinja_env.add_extension(CodeBlockExtension)
     jinja_env.add_extension(MarkdownExtension)
 
     template_files = list_files_sorted_by_creation_time(TEMPLATE_FOLDER)

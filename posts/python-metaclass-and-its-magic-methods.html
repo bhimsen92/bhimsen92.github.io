@@ -24,121 +24,119 @@
       </div>
     </nav>
 
-    <!-- Main content -->
-    <div class="container mx-auto flex-grow">
-      <!-- Blog post -->
-      <article class="bg-white rounded-lg shadow-md p-8">
-        <h1 class="text-3xl font-semibold text-gray-900 mb-4">
-          Python Metaclass and It's Magic Methods
-        </h1>
-
-        <!-- Post metadata -->
-
-        <div class="max-w-6xl prose text-justify">
-          <!-- Post Content -->
-          <p class="mb-4">
-            Metaclasses are a very confusing and complicated topic in python,
-            well at least for me. Everything seems clear when I am reading this
-            topic but I forget after a few days. So I thought it is better to
-            blog about my understanding so that this concept always stays with
-            me.
-          </p>
-
-          <p class="mb-4">
-            A
-            <code>metaclass</code>
-            is nothing but a class of a class. In python everything is an
-            object, including
-            <code>class</code>
-            . Python’s built-in function
-            <code>type</code>
-            is responsible for creating new type objects a.k.a classes at
-            runtime. And you can verify it yourself by checking the
-            <code>__class__</code>
-            property type.
-            <!-- prettier-ignore-start -->
-
-    <div class="container mx-auto my-4">
-    <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 python">
+    
+  <!-- Main content -->
+  <div class="container mx-auto flex-grow">
+    <!-- Blog post -->
+    <article class="bg-white rounded-lg shadow-md p-8">
+      <h1 class="text-3xl font-semibold text-gray-900 mb-4">
         
->>class A:
+  Python Metaclass and It's Magic Methods
+
+      </h1>
+
+      <!-- Post metadata -->
+      
+
+      <div class="max-w-6xl prose text-justify">
+        
+  <!-- Post Content -->
+  
+            <p class="my-4 text-lg">
+    Metaclasses are a very confusing and complicated topic in python, well at
+    least for me. Everything seems clear when I am reading this topic but I
+    forget after a few days. So I thought it is better to blog about my
+    understanding so that this concept always stays with me.
+  </p>
+        
+
+  
+            <p class="my-4 text-lg">
+    A
+    <code>metaclass</code>
+    is nothing but a class of a class. In python everything is an object,
+    including
+    <code>class</code>
+    . Python’s built-in function
+    <code>type</code>
+    is responsible for creating new type objects a.k.a classes at runtime. And
+    you can verify it yourself by checking the
+    <code>__class__</code>
+    property type.
+
+<pre class="bg-gray-100 rounded p-4 overflow-auto"><code class="python">>>class A:
 >>   pass
 >>A.__class__
->>type
-</code></pre></div></div>
-<!-- prettier-ignore-end -->
+>>type</code></pre>
 
     A type function when supplied with one argument, returns the type of the object which is nothing but its class. 
     If you supply 3 arguments, it creates a new <code>type</code> i.e class at runtime.
 
-    <!-- prettier-ignore-start -->
 
-    <div class="container mx-auto my-4">
-    <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 python">
-        
->>class A:
+<pre class="bg-gray-100 rounded p-4 overflow-auto"><code class="python">>>class A:
 >>    pass
 >>a = A()
 >>type(a)
 >>__main__.A
 >>B = type(‘B’, (), {“a”: 2}) // name, bases, attributes
 >>B.a
->>2
-</code></pre></div></div>
-<!-- prettier-ignore-end -->
-            So you can see that class definition is just a syntactic sugar for
-            <code>type</code>
-            call at runtime which is invoked when the interpreter parses the
-            class definition.
-          </p>
+>>2</code></pre>
 
-          <p class="mb-4 mt-4">
-            Python allows us to customize the class construction behaviour by
-            subclassing
-            <code>type</code>
-            class and overriding certain magic methods, namely: “__new__,
-            __init__, __call__, __prepare__”. Once this custom metaclass is
-            defined, we can let the new classes use this new metaclass by
-            passing it as an argument in class definition using “metaclass”
-            arguments. Before we understand how the aforementioned magic methods
-            work in the case of metaclass, let's understand how they work in
-            normal classes.
-          </p>
+    So you can see that class definition is just a syntactic sugar for
+    <code>type</code>
+    call at runtime which is invoked when the interpreter parses the class
+    definition.
+  </p>
+        
 
-          <p class="mb-4 mt-4">
-            Explain the magic methods using normal classes Let's understand the
-            order of their method execution before we look at a simple example.
-            Method “__prepare__” is only applicable when the class is a
-            metaclass(explained later). So we will focus on “__new__, __init__,
-            __call__” methods. Each of the above methods receive the same
-            arguments as the constructor, except for __call__. __new__: It is
-            called before an instance of a class is created. That is, when you
-            try to instantiate a class. It is the first method that is invoked
-            of the magic methods that were mentioned earlier. It is a static
-            class where the first argument is the class whose object will be
-            created. The rest are the arguments passed to the constructor. This
-            method must return the object created, otherwise “__init__” won’t be
-            called next. __init__: We are all familiar with this method call.
-            Called to initialize the object. It is the second method called
-            right after the “new” method call. Returns the nothing __call__:
-            This is invoked when an instance of the method is called as a
-            function. Typically needed when a function/service requires a
-            callable object. Probably needed when you want stateful functions.
-            It receives the argos that are supplied when the object is called.
-            Let’s try to implement the “Singleton” class using the above magic
-            methods. To make sure that only one instance of a class exists at
-            any moment of time, we need to intercept the object creation step so
-            that just before an object is created, we will check if the object
-            already exists. If it does, return that otherwise create it, store
-            it in a map, and return the object.
-          </p>
-        </div>
+  
+            <p class="my-4 text-lg">
+    Python allows us to customize the class construction behaviour by
+    subclassing
+    <code>type</code>
+    class and overriding certain magic methods, namely: “__new__, __init__,
+    __call__, __prepare__”. Once this custom metaclass is defined, we can let
+    the new classes use this new metaclass by passing it as an argument in class
+    definition using “metaclass” arguments. Before we understand how the
+    aforementioned magic methods work in the case of metaclass, let's understand
+    how they work in normal classes.
+  </p>
+        
 
-        <a href="/posts" class="text-blue-500 hover:underline">Back to Posts</a>
-      </article>
-    </div>
+  
+            <p class="my-4 text-lg">
+    Explain the magic methods using normal classes Let's understand the order of
+    their method execution before we look at a simple example. Method
+    “__prepare__” is only applicable when the class is a metaclass(explained
+    later). So we will focus on “__new__, __init__, __call__” methods.
+    <br><br> Each of the above methods receive the same arguments as the
+    constructor, except for __call__. __new__: It is called before an instance
+    of a class is created. That is, when you try to instantiate a class. It is
+    the first method that is invoked of the magic methods that were mentioned
+    earlier. <br><br> It is a static class where the first argument is the
+    class whose object will be created. The rest are the arguments passed to the
+    constructor. This method must return the object created, otherwise
+    “__init__” won’t be called next. __init__: We are all familiar with this
+    method call. Called to initialize the object. It is the second method called
+    right after the “new” method call. Returns the nothing __call__: This is
+    invoked when an instance of the method is called as a function. Typically
+    needed when a function/service requires a callable object. Probably needed
+    when you want stateful functions. It receives the argos that are supplied
+    when the object is called. <br><br> Let’s try to implement the
+    “Singleton” class using the above magic methods. To make sure that only one
+    instance of a class exists at any moment of time, we need to intercept the
+    object creation step so that just before an object is created, we will check
+    if the object already exists. If it does, return that otherwise create it,
+    store it in a map, and return the object.
+  </p>
+        
+
+      </div>
+
+      <a href="/posts" class="text-blue-500 hover:underline">Back to Posts</a>
+    </article>
+  </div>
+
 
     <script>
       hljs.highlightAll();

@@ -6,14 +6,14 @@
 
 {% block blog_content %}
   <!-- Post Content -->
-  <p class="mb-4">
+  {% p %}
     Metaclasses are a very confusing and complicated topic in python, well at
     least for me. Everything seems clear when I am reading this topic but I
     forget after a few days. So I thought it is better to blog about my
     understanding so that this concept always stays with me.
-  </p>
+  {% endp %}
 
-  <p class="mb-4">
+  {% p %}
     A
     <code>metaclass</code>
     is nothing but a class of a class. In python everything is an object,
@@ -25,20 +25,19 @@
     you can verify it yourself by checking the
     <code>__class__</code>
     property type.
-    <!-- prettier-ignore-start -->
-{% code 'python' %}
+
+{% code_block language='python' %}
 >>class A:
 >>   pass
 >>A.__class__
 >>type
-{% endcode %}
-<!-- prettier-ignore-end -->
+{% endcode_block %}
 
     A type function when supplied with one argument, returns the type of the object which is nothing but its class. 
     If you supply 3 arguments, it creates a new <code>type</code> i.e class at runtime.
 
-    <!-- prettier-ignore-start -->
-{% code 'python' %}
+
+{% code_block language='python' %}
 >>class A:
 >>    pass
 >>a = A()
@@ -47,15 +46,15 @@
 >>B = type(‘B’, (), {“a”: 2}) // name, bases, attributes
 >>B.a
 >>2
-{% endcode %}
-<!-- prettier-ignore-end -->
+{% endcode_block %}
+
     So you can see that class definition is just a syntactic sugar for
     <code>type</code>
     call at runtime which is invoked when the interpreter parses the class
     definition.
-  </p>
+  {% endp %}
 
-  <p class="mb-4 mt-4">
+  {% p %}
     Python allows us to customize the class construction behaviour by
     subclassing
     <code>type</code>
@@ -65,31 +64,31 @@
     definition using “metaclass” arguments. Before we understand how the
     aforementioned magic methods work in the case of metaclass, let's understand
     how they work in normal classes.
-  </p>
+  {% endp %}
 
-  <p class="mb-4 mt-4">
+  {% p %}
     Explain the magic methods using normal classes Let's understand the order of
     their method execution before we look at a simple example. Method
     “__prepare__” is only applicable when the class is a metaclass(explained
-    later). So we will focus on “__new__, __init__, __call__” methods. Each of
-    the above methods receive the same arguments as the constructor, except for
-    __call__. __new__: It is called before an instance of a class is created.
-    That is, when you try to instantiate a class. It is the first method that is
-    invoked of the magic methods that were mentioned earlier. It is a static
-    class where the first argument is the class whose object will be created.
-    The rest are the arguments passed to the constructor. This method must
-    return the object created, otherwise “__init__” won’t be called next.
-    __init__: We are all familiar with this method call. Called to initialize
-    the object. It is the second method called right after the “new” method
-    call. Returns the nothing __call__: This is invoked when an instance of the
-    method is called as a function. Typically needed when a function/service
-    requires a callable object. Probably needed when you want stateful
-    functions. It receives the argos that are supplied when the object is
-    called. Let’s try to implement the “Singleton” class using the above magic
-    methods. To make sure that only one instance of a class exists at any moment
-    of time, we need to intercept the object creation step so that just before
-    an object is created, we will check if the object already exists. If it
-    does, return that otherwise create it, store it in a map, and return the
-    object.
-  </p>
+    later). So we will focus on “__new__, __init__, __call__” methods.
+    {% new_line %} Each of the above methods receive the same arguments as the
+    constructor, except for __call__. __new__: It is called before an instance
+    of a class is created. That is, when you try to instantiate a class. It is
+    the first method that is invoked of the magic methods that were mentioned
+    earlier. {% new_line %} It is a static class where the first argument is the
+    class whose object will be created. The rest are the arguments passed to the
+    constructor. This method must return the object created, otherwise
+    “__init__” won’t be called next. __init__: We are all familiar with this
+    method call. Called to initialize the object. It is the second method called
+    right after the “new” method call. Returns the nothing __call__: This is
+    invoked when an instance of the method is called as a function. Typically
+    needed when a function/service requires a callable object. Probably needed
+    when you want stateful functions. It receives the argos that are supplied
+    when the object is called. {% new_line %} Let’s try to implement the
+    “Singleton” class using the above magic methods. To make sure that only one
+    instance of a class exists at any moment of time, we need to intercept the
+    object creation step so that just before an object is created, we will check
+    if the object already exists. If it does, return that otherwise create it,
+    store it in a map, and return the object.
+  {% endp %}
 {% endblock %}
