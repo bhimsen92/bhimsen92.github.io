@@ -8,44 +8,11 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 
+from extensions import MarkdownExtension, CodeBlockExtension
+
 
 TEMPLATE_FOLDER = "templates"
 POSTS_FOLDER = "posts"
-
-
-class CodeBlockExtension(Extension):
-    tags = {"code"}
-
-    HTML_START = """
-    <div class="container mx-auto my-4">
-    <div class="bg-white rounded-lg shadow-md border border-gray-300">
-        <pre class="rounded-lg overflow-x-auto"><code class="block p-2 text-sm text-gray-900 {}">
-        """
-
-    HTML_END = """</code></pre></div></div>"""
-
-    def parse(self, parser):
-        lineno = next(parser.stream).lineno
-
-        args = []
-        if parser.stream.current.type == "string":
-            args = [parser.parse_expression()]
-        else:
-            args = [nodes.Const(None)]
-
-        body = parser.parse_statements(["name:endcode"], drop_needle=True)
-    
-        rendered_block = nodes.CallBlock(
-            self.call_method("_render_block", args), [], [], body
-        ).set_lineno(lineno)
-
-        return rendered_block
-
-    def _render_block(self, language, caller):
-        if not language:
-            language = ''
-
-        return self.HTML_START.format(language) + caller() + self.HTML_END
 
 
 def to_blog_title(value):
@@ -77,7 +44,9 @@ def render_templates():
     jinja_env = Environment(loader=FileSystemLoader(TEMPLATE_FOLDER))
     jinja_env.filters["to_blog_title"] = to_blog_title
     jinja_env.filters["to_html_extension"] = to_html_extension
+    
     jinja_env.add_extension(CodeBlockExtension)
+    jinja_env.add_extension(MarkdownExtension)
 
     template_files = list_files_sorted_by_creation_time(TEMPLATE_FOLDER)
 
