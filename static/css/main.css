@@ -588,6 +588,10 @@ video {
   }
 }
 
+.static {
+  position: static;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -595,6 +599,10 @@ video {
 
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.block {
+  display: block;
 }
 
 .flex {
@@ -723,16 +731,40 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.outline {
+  outline-style: solid;
+}
+
 /* Custom styles for markdown lists */
 
-.prose ol {
+.prose ol, #links ol {
   list-style-position: inside;
   list-style-type: decimal;
 }
 
-.prose ul {
+.prose ol li {
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.prose ol ol {
+  padding-left: 2.5rem;
+  /* Double the padding for deeper levels */
+}
+
+.prose ul, #links ul {
   list-style-position: inside;
   list-style-type: disc;
+}
+
+.prose ul li {
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.prose ul ul {
+  padding-left: 2.5rem;
+  /* Double the padding for deeper levels */
 }
 
 /* Custom styles for links */
@@ -746,6 +778,35 @@ video {
 .prose a:hover {
   --tw-text-opacity: 1;
   color: rgb(30 64 175 / var(--tw-text-opacity));
+}
+
+.prose p {
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.prose h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-weight: 700;
+}
+
+.prose h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .hover\:underline:hover {

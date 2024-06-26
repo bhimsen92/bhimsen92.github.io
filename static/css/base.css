@@ -3,16 +3,54 @@
 @tailwind utilities;
 
 /* Custom styles for markdown lists */
-.prose ol {
+.prose ol, #links ol {
     @apply list-decimal list-inside;
 }
 
-.prose ul {
+.prose ol li {
+    @apply mb-1 mt-1;
+}
+
+.prose ol ol {
+    padding-left: 2.5rem; /* Double the padding for deeper levels */
+}
+
+.prose ul, #links ul {
     @apply list-disc list-inside;
+}
+
+.prose ul li {
+    @apply mb-1 mt-1;
+}
+
+.prose ul ul {
+    padding-left: 2.5rem; /* Double the padding for deeper levels */
 }
 
 
 /* Custom styles for links */
 .prose a {
     @apply text-blue-600 underline hover:text-blue-800;
+}
+
+.prose p {
+    @apply mb-3 mt-3;
+    @apply font-sans text-base;
+}
+
+.prose h1, h2, h3, h4, h5, h6 {
+    @apply mb-4 mt-4 font-bold;
+
+}
+
+.prose h1 {
+    @apply text-3xl;
+}
+
+.prose h2 {
+    @apply text-2xl
+}
+
+.prose h3 {
+    @apply text-xl
 }

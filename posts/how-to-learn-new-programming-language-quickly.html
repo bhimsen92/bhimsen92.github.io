@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/css/default.min.css" rel="stylesheet" />
+    <script src="/static/js/highlight.min.js"></script>
+  </head>
+  <body
+    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
+  >
+    <!-- Navigation bar -->
+    <nav class="p-4 border-b-4 border-b-orange-700">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <a href="/">
+            <span class="text-lg font-bold font-mono">Blog</span>
+          </a>
+          <a href="/">Posts</a>
+        </div>
+        <a href="/posts/about.html">About</a>
+      </div>
+    </nav>
+
+    
+  <!-- Main content -->
+  <div class="container mx-auto flex-grow">
+    <!-- Blog post -->
+    <article class="bg-white rounded-lg shadow-md p-8">
+      <h1 class="text-3xl font-semibold text-gray-900 mb-4">
+        How To Learn New Programming Language Quickly
+      </h1>
+
+      <div class="flex items-center text-gray-600 mb-4">
+        <p class="text-sm text-gray-500">
+          <strong>Date:</strong>
+          2023-01-27 22:50:00+05:30
+        </p>
+        &nbsp; &nbsp;
+        <p class="text-sm text-gray-500">
+          <strong>Tags:</strong>
+          programming-language
+        </p>
+      </div>
+
+      <div class="max-w-6xl prose text-justify"><p>Our job requires us to learn new programming languages once in a while. Some languages are easy while others have steep learning curve. I would have wished if there was a templte for learning languages because each language has similar concepts but with different syntax. Once you understand what is common between the language you know and the language you want to learn, all that is left is to master the syntax which comes with some practice. This document tries to encapsulate all that for the scala language and later use it to learn both Python, Rust and Java.</p>
+
+<p>This document expects the reader to know at least one programming language and have some idea of what OOP(Object Oriented Programming) and Function Programming means.</p>
+
+<p>What is a programming language ? Though I don’t know the textbook definition, in my opinion a programming language is a system(of notations) which has facilities to represent real world entities and manipulate them using predefined or custom operations to produce a result.</p>
+
+<p>Based on the above definition, it is very easy to deduce that every programming language should have few things or sometime more in common. So first we list down all things that are common between languages. Later we will diverge based on whether the language is an OO(object oriented) or functional language.</p>
+
+<h2>Language Learning Template</h2>
+
+<ol>
+<li>Build and Dependency management: How to build and load dependencies for your project.</li>
+<li>Primitive data types to represent real world data. Real world is made up of numbers and characters(strings).</li>
+<li>Operations.</li>
+<li>Custom data types to represent complex real world entities. From here onwards called objects.</li>
+<li>Ways to define variables and constants.</li>
+<li>Constructs for looping and branching.</li>
+<li>Functions or methods to encapsulate a block of code or steps.</li>
+<li>Modules or packages or namespaces to organise code into logical groups.</li>
+<li>Collections or data structures to simplify programming.</li>
+</ol>
+
+<h3>If the language supports object oriented programming then it should have:</h3>
+
+<ol start="10">
+<li>Classes and objects to represent real world entities.</li>
+<li>Inheritance: A way to create new classes using existing classes.</li>
+<li>Interface: A technique to build abstractions. It allows you to define operations or methods without their implementation. [not all languages support this feature]</li>
+<li>Multiple Inheritance. [not all languages support this feature]</li>
+</ol>
+
+<h3>If the language is Functional language:</h3>
+
+<ol start="14">
+<li>Supports functions as first class objects. That is, there is no difference between regular values and functions. They can be assigned, passed to functions and can be returned from functions.</li>
+<li>As a consequence of the above statement, support for Higher order functions.</li>
+<li>Closure.</li>
+<li>Immutable data structures or a way to define immutable values.</li>
+<li>Tail recursion.</li>
+</ol>
+
+<h3>Threading and Multi Process computations:</h3>
+
+<ol start="19">
+<li>Ability to create threads and handle concurrent computation.</li>
+<li>Locks and other ways to protect critical sections of the code.</li>
+<li>Support for asynchronous programming.</li>
+</ol>
+
+<p>In the upcoming posts, we will use the above template to learn Scala, Go, Rust and Java.</p>
+</div>
+      <br />
+      <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
+    </article>
+  </div>
+
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

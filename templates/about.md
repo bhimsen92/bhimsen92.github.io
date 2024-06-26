@@ -1,6 +1,6 @@
 ---
 title: About
-date: 2024-06-19
+date: 2024-06-27
 tags: ["about"]
 ---
 

@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/css/default.min.css" rel="stylesheet" />
+    <script src="/static/js/highlight.min.js"></script>
+  </head>
+  <body
+    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
+  >
+    <!-- Navigation bar -->
+    <nav class="p-4 border-b-4 border-b-orange-700">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <a href="/">
+            <span class="text-lg font-bold font-mono">Blog</span>
+          </a>
+          <a href="/">Posts</a>
+        </div>
+        <a href="/posts/about.html">About</a>
+      </div>
+    </nav>
+
+    
+  <!-- Main content -->
+  <div class="container mx-auto flex-grow">
+    <!-- Blog post -->
+    <article class="bg-white rounded-lg shadow-md p-8">
+      <h1 class="text-3xl font-semibold text-gray-900 mb-4">
+        A Template for System Design
+      </h1>
+
+      <div class="flex items-center text-gray-600 mb-4">
+        <p class="text-sm text-gray-500">
+          <strong>Date:</strong>
+          2023-06-22 01:20:00+05:30
+        </p>
+        &nbsp; &nbsp;
+        <p class="text-sm text-gray-500">
+          <strong>Tags:</strong>
+          learnings, system-design
+        </p>
+      </div>
+
+      <div class="max-w-6xl prose text-justify"><p>Designing a software system is difficult, especially when you don't have a plan or a set of instructions. But once you have a plan to guide you, it becomes easier to solve the problem step by step. In this blog, I will share a few things I learned from reading online and my own experience about how to approach system design questions at work or in interviews.</p>
+
+<h2>Problem statement</h2>
+
+<p>To begin, it is important to accurately define the problem statement. This involves providing context about the problem and explaining the reasons for solving it. It is crucial to address the "why" behind the problem, including its consequences and impact.</p>
+
+<p>When writing a technical design document, it is beneficial to offer background information and discuss existing solutions. This helps to provide a comprehensive understanding of the problem and its current state.</p>
+
+<p>Lastly, it is helpful to briefly describe the desired outcome of the tech document or system design. By implementing the proposed solution, users will no longer encounter the previously mentioned issue.</p>
+
+<h2>Listing Down Assumptions</h2>
+
+<p>This step is important for setting the right expectations. When you start building something, there are certain things you assume to be true. Here are a couple of examples:</p>
+
+<ol>
+<li>For instance, let's say your design relies on using specific tools like Kubernetes (k8s) or AWS, as it needs to utilize their internal features.</li>
+<li>Another example could be if a company has its own ongoing architecture development. In your design, you assume that your solution will work only if that specific architecture is in place.</li>
+</ol>
+
+<p>By stating these assumptions from the beginning, it ensures that everyone understands what is needed and what limitations exist for the project.</p>
+
+<h2>Risk and Open Items</h2>
+
+<p>In this step, you outline the challenges or potential issues that your project may encounter. Since assumptions were made in the previous steps, there are some associated risks, such as:</p>
+
+<ol>
+<li>The API you rely on might lack proper documentation or support. This could result in project delays and difficulties in implementing your solution. </li>
+<li>An "open item" refers to any pending work that needs to be completed before you can begin working on your project. It acts as a prerequisite or dependency for your project to progress.</li>
+</ol>
+
+<p>By identifying and acknowledging these challenges and open items, you can plan for them in advance and mitigate any setbacks or obstacles that may arise during the project.</p>
+
+<h2>High Level Design</h2>
+
+<p>In this step, you will create a basic diagram that outlines the main components of your system and how they interact. The diagram provides a high-level overview without going into too much details, helping stakeholders visualize the overall architecture and information flow. Focus on the major components and their interactions, keeping it simple and straightforward.</p>
+
+<h2>High Level Description</h2>
+
+<p>In this step, you will describe your solution using the components identified in the high-level design. For example, if your solution is a web application, you would explain how a request flows through your design and generates a response. This involves explaining the purpose and functionality of each individual component.</p>
+
+<p>Now that you have a basic working solution, it is crucial to evaluate its robustness before seeking feedback. Take a moment to consider various scenarios and error situations that could potentially disrupt your design. By proactively identifying and addressing these issues, you demonstrate thoroughness and preparedness when sharing your design with others. This approach prevents wasting others' time by avoiding glaring issues that may arise, such as handling excessive requests. By anticipating and resolving potential problems beforehand, you can present a more robust and reliable design to receive valuable feedback.</p>
+
+<p>To refine your design, you can follow the steps below:</p>
+
+<ul>
+<li>Consider the possibility of data inconsistency or an inconsistent system state due to failures or errors. Determine if you need to implement transactions or a SAGA (Saga pattern) to maintain data integrity and consistency.</li>
+<li>Address the risk of creating duplicate records in your system. Ensure that appropriate measures are in place to prevent the creation of duplicate entries.</li>
+<li>Evaluate how your system will handle database loads. Consider both read-heavy and write-heavy scenarios and design strategies to efficiently handle these workloads.    
+<ul>
+<li>For read-heavy scenarios, implement caching mechanisms to reduce database load and improve response times.</li>
+<li>For write-heavy scenarios, use techniques like sharding or partitioning, or consider implementing asynchronous processing to handle high write volumes.</li>
+</ul></li>
+<li>Plan for potential database crashes, both primary and secondary instances. Establish backup and recovery mechanisms to ensure data integrity and minimize downtime.</li>
+<li>If your design includes caching, consider the possibility of cache failures or crashes. Implement fault-tolerant caching mechanisms to avoid such failures.</li>
+<li>Think about the impact of increased server load beyond anticipated levels. Design your system to handle scalability by implementing strategies like horizontal scaling, load balancing, and rate-limiting to ensure optimal performance under high load conditions.</li>
+<li>Think about the possibility of web server or application server crashes. Implement redundancy and failover mechanisms to provide HA(high availability).</li>
+<li>Address any potential latency issues in your system. Optimize network communication, database querie to minimize response times.</li>
+<li>valuate whether all operations in your system need to be synchronous. Explore opportunities to make certain operations asynchronous to improve system responsiveness and scalability.</li>
+<li>Identify any performance bottlenecks and find ways to make your system faster. Optimize algorithms, improve database indexing, utilize caching techniques etc.</li>
+</ul>
+
+<p>Once your design has been refined, please share the design document with your peers to gather their feedback. However, it is important not to rush the process of creating the document. It is recommended to allocate a minimum of one week for designing the document, and it is advised not to settle for less time.</p>
+
+<p>When refining your design to handle potential error scenarios, it is crucial to avoid imagining non-existent problems or scenarios that are unlikely to occur. By doing so, you can prevent the creation of overly complex and potentially costly designs that are unnecessary. It is important to consider the trade-offs and not strive for perfection. As long as your solution delivers the intended features and does not inconvenience the user, it is considered good enough. Avoid incorporating fancy patterns or technologies merely for the sake of it.</p>
+
+<h2>Low Level Design</h2>
+
+<p>Once done, start working on low level design. This would involve:</p>
+
+<ol>
+<li>Desribing invidual components or modules.</li>
+<li>Design API interface.</li>
+<li>Writing down sequence diagram to show how these components describe.</li>
+</ol>
+
+<h2>Come up with Milestones</h2>
+
+<p>Milestones serve as checkpoints to showcase the progress and achievements of a project. Each milestone represents a significant deliverable that marks a specific stage of completion. Here are some examples of milestones in the context of software development:</p>
+
+<ol>
+<li>Gathering the requirements.</li>
+<li>Designign the high level solution and reviewing</li>
+<li>Implementing modules as described in the low level design. </li>
+</ol>
+
+<h2>Deployment details</h2>
+
+<p>If the company already has a common deployment strategy in place, it is possible to skip the deployment section as it aligns with the existing practices. However, if it is a hobby or personal project where no established deployment strategy exists, it becomes important to describe how the designed solution will be deployed.</p>
+
+<p>I hope these guidlines will help you to streamline your thoughts while designing the system and also helps you to build robust systems.</p>
+</div>
+      <br />
+      <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
+    </article>
+  </div>
+
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

@@ -71,6 +71,7 @@ def list_files_sorted_by_creation_time(directory):
             for file in os.listdir(directory) if file.endswith(".md")
         ],
         key=lambda x: os.stat(os.path.join(directory, x)).st_ctime,
+        reverse=True,
     )
 
 
