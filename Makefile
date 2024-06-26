@@ -1,11 +1,11 @@
 SHELL := /bin/zsh
 
-.PHONY: render_templates build_css format_html
+.PHONY: markdown_to_html build_css format_html
 
-all: render_templates build_css
+all: markdown_to_html build_css format_html
 
-render_templates:
-	python ./render_templates.py
+markdown_to_html:
+	python ./markdown_to_html.py
 
 build_css:
 	npm run build:css

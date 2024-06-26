@@ -6,17 +6,15 @@
   >
     <h1 class="text-2xl font-semibold mb-4">Latest Posts</h1>
     <ul>
-      {% for template_file in template_files %}
-        {% if template_file not in skip_files %}
-          <li class="mb-4 list-disc">
-            <a
-              href="/posts/{{ template_file | to_html_extension }}"
-              class="text-blue-500 hover:underline"
-            >
-              {{ template_file | to_blog_title }}
-            </a>
-          </li>
-        {% endif %}
+      {% for post_title, post_file in post_titles %}
+        <li class="mb-4 list-disc">
+          <a
+            href="/posts/{{ post_file }}"
+            class="text-blue-500 hover:underline"
+          >
+            {{ post_title }}
+          </a>
+        </li>
       {% endfor %}
     </ul>
   </article>

@@ -1,1 +1,51 @@
-./posts/index.html
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/css/default.min.css" rel="stylesheet" />
+    <script src="/static/js/highlight.min.js"></script>
+  </head>
+  <body
+    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
+  >
+    <!-- Navigation bar -->
+    <nav class="p-4 border-b-4 border-b-orange-700">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <a href="/">
+            <span class="text-lg font-bold font-mono">Blog</span>
+          </a>
+          <a href="/">Posts</a>
+        </div>
+        <a href="/posts/about.html">About</a>
+      </div>
+    </nav>
+
+    
+  <article
+    class="bg-white rounded-lg shadow-md p-8 min-h-screen h-full max-h-screen"
+  >
+    <h1 class="text-2xl font-semibold mb-4">Latest Posts</h1>
+    <ul>
+      
+        <li class="mb-4 list-disc">
+          <a
+            href="/posts/learnings.html"
+            class="text-blue-500 hover:underline"
+          >
+            Learnings From Work and Life
+          </a>
+        </li>
+      
+    </ul>
+  </article>
+
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
