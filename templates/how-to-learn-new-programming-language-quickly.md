@@ -1,6 +1,6 @@
 ---
 title: 'How To Learn New Programming Language Quickly'
-date: 2023-01-27T22:50:00+05:30
+date: 2023-01-27
 tags:
   - programming-language
 ---

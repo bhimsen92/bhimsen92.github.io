@@ -1,6 +1,6 @@
 ---
 title: Learnings From Work and Life
-date: 2024-06-27
+date: 2024-06-24
 tags: ["life", "learnings"]
 ---
 

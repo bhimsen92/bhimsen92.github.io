@@ -1,6 +1,6 @@
 ---
 title: 'Learning Scala'
-date: 2023-01-27T22:50:00+05:30
+date: 2023-01-27
 tags:
   - scala
 ---

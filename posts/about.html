@@ -9,14 +9,14 @@
     <script src="/static/js/highlight.min.js"></script>
   </head>
   <body
-    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
+    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal max-w-70"
   >
     <!-- Navigation bar -->
     <nav class="p-4 border-b-4 border-b-orange-700">
       <div class="flex justify-between items-center">
         <div class="flex items-center space-x-4">
           <a href="/">
-            <span class="text-lg font-bold font-mono">Blog</span>
+            <span class="text-lg font-bold font-mono">Code Chronicles</span>
           </a>
           <a href="/">Posts</a>
         </div>
@@ -24,34 +24,35 @@
       </div>
     </nav>
 
-    
-  <!-- Main content -->
-  <div class="container mx-auto flex-grow">
-    <!-- Blog post -->
-    <article class="bg-white rounded-lg shadow-md p-8">
-      <h1 class="text-3xl font-semibold text-gray-900 mb-4">
-        About
-      </h1>
+    <!-- Main content -->
+    <div class="container mx-auto flex-grow">
+      <!-- Blog post -->
+      <article class="bg-white rounded-lg shadow-md p-8">
+        <h1 class="text-3xl font-semibold text-gray-900 mb-4">About</h1>
 
-      <div class="flex items-center text-gray-600 mb-4">
-        <p class="text-sm text-gray-500">
-          <strong>Date:</strong>
-          2024-06-27
-        </p>
-        &nbsp; &nbsp;
-        <p class="text-sm text-gray-500">
-          <strong>Tags:</strong>
-          about
-        </p>
-      </div>
+        <div class="flex items-center text-gray-600 mb-4">
+          <p class="text-sm text-gray-500">
+            <strong>Date:</strong>
+            2024-06-27
+          </p>
+          &nbsp; &nbsp;
+          <p class="text-sm text-gray-500">
+            <strong>Tags:</strong>
+            about
+          </p>
+        </div>
 
-      <div class="max-w-6xl prose text-justify"><p>A passionate computer programmer, avid movie watcher and a cat lover :). <a href="https://github.com/bhimsen92">Find me on GitHub</a></p>
-</div>
-      <br />
-      <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
-    </article>
-  </div>
-
+        <div class="max-w-6xl prose text-justify">
+          <p>
+            A passionate computer programmer, avid movie watcher and a cat lover
+            :).
+            <a href="https://github.com/bhimsen92">Find me on GitHub</a>
+          </p>
+        </div>
+        <br />
+        <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
+      </article>
+    </div>
 
     <script>
       hljs.highlightAll();

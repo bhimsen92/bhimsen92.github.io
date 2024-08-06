@@ -6,7 +6,7 @@ tags: ["python", "metaclass"]
 
 Metaclasses are a very confusing and complicated topic in Python, at least for me. Everything seems clear when I read about this topic, but I forget it after a few days. So, I thought it would be better to blog about my understanding to ensure this concept always stays with me.
 
-## What are metaclasses ?
+### What are metaclasses ?
 
 
 A `metaclass` is simply a class of a class. In Python, everything is an object, including `class`. Python's built-in function `type` is responsible for creating new type objects, also known as classes, at runtime. You can verify this by checking the `type` of the `class` property.
@@ -38,29 +38,29 @@ Python allows us to customize the class construction behavior by subclassing the
 
 Before we understand how the aforementioned magic methods work in the case of metaclasses, let's understand how they work in normal classes.
 
-## Magic methods and their behaviour
+### Magic methods and their behaviour
 
 Let's understand the order of method execution before we look at a simple example. The “__prepare__” method is only applicable when the class is a metaclass (explained later), so we will focus on the “__new__,” “__init__,” and “__call__” methods.
 
 Each of the above methods receives the same arguments as the constructor, except for __call__.
 
-### `__new__`
+#### `__new__`
 - It is called before an instance of a class is created, that is, when you try to instantiate a class.
 - It is the first method invoked among the magic methods mentioned earlier.
 - It is a static method where the first argument is the class whose object will be created. The rest are the arguments passed to the constructor.
 - This method must return the created object; otherwise, “__init__” won’t be called next.
 
-### `__init__`
+#### `__init__`
 - We are all familiar with this method call. It initializes the object.
 - It is the second method called right after the “__new__” method call.
 - It returns nothing.
 
-### `__call__`
+#### `__call__`
 - This is invoked when an instance of the class is called as a function.
 - It is typically needed when a function or service requires a callable object, probably needed when you want stateful functions.
 - It receives the arguments that are supplied when the object is called.
 
-## Magic methods in normal classe
+### Magic methods in normal classe
 
 Let's try to implement the “Singleton” class using the above magic methods. To ensure that only one instance of a class exists at any moment, we need to intercept the object creation step. Just before an object is created, we will check if the object already exists. If it does, we return that instance; otherwise, we create it, store it in a map, and return the object.
 
@@ -86,15 +86,15 @@ class A(Singleton):
     pass
 ```
 
-### Explaination
+#### Explaination
 
 As explained before, for normal classes (which don't use a metaclass), the __new__ method is invoked just before an object is instantiated. This makes it a perfect place to keep the logic to avoid creating unnecessary objects and always reuse the object for the given class.
 
-## Using meta class
+### Using meta class
 
 Let's explore metaclasses by building an AbstractMetaclass that throws an error if a class does not define all required abstract methods. Unlike Python's built-in abstractmethod decorator and ABC class, our metaclass will enforce the abstract method requirements at the time the class is defined, rather than when an instance of the class is created.
 
-### Key Concepts:
+#### Key Concepts:
 
 - __new__: Called right after the class definition is parsed and just before the class object is created. It receives the name, bases, and attributes of the class.
 - __init__: Called right after the class object is created. It also receives the name, bases, and attributes of the class.
@@ -102,7 +102,7 @@ Let's explore metaclasses by building an AbstractMetaclass that throws an error 
 - __prepare__: Customizes the class namespace. It returns a dictionary-like object to store class variables and functions.
 
 
-### Implementation:
+#### Implementation:
 
 Let's implement AbstractMetaclass to enforce that all abstract methods are defined in subclasses:
 

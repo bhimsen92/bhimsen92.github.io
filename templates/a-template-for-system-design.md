@@ -1,6 +1,6 @@
 ---
 title: "A Template for System Design"
-date: 2023-06-22T01:20:00+05:30
+date: 2023-06-22
 tags:
   - learnings
   - system-design

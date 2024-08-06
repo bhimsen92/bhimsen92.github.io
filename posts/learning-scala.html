@@ -9,14 +9,14 @@
     <script src="/static/js/highlight.min.js"></script>
   </head>
   <body
-    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
+    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal max-w-70"
   >
     <!-- Navigation bar -->
     <nav class="p-4 border-b-4 border-b-orange-700">
       <div class="flex justify-between items-center">
         <div class="flex items-center space-x-4">
           <a href="/">
-            <span class="text-lg font-bold font-mono">Blog</span>
+            <span class="text-lg font-bold font-mono">Code Chronicles</span>
           </a>
           <a href="/">Posts</a>
         </div>
@@ -24,34 +24,49 @@
       </div>
     </nav>
 
-    
-  <!-- Main content -->
-  <div class="container mx-auto flex-grow">
-    <!-- Blog post -->
-    <article class="bg-white rounded-lg shadow-md p-8">
-      <h1 class="text-3xl font-semibold text-gray-900 mb-4">
-        Learning Scala
-      </h1>
+    <!-- Main content -->
+    <div class="container mx-auto flex-grow">
+      <!-- Blog post -->
+      <article class="bg-white rounded-lg shadow-md p-8">
+        <h1 class="text-3xl font-semibold text-gray-900 mb-4">
+          Learning Scala
+        </h1>
 
-      <div class="flex items-center text-gray-600 mb-4">
-        <p class="text-sm text-gray-500">
-          <strong>Date:</strong>
-          2023-01-27 22:50:00+05:30
-        </p>
-        &nbsp; &nbsp;
-        <p class="text-sm text-gray-500">
-          <strong>Tags:</strong>
-          scala
-        </p>
-      </div>
+        <div class="flex items-center text-gray-600 mb-4">
+          <p class="text-sm text-gray-500">
+            <strong>Date:</strong>
+            2023-01-27
+          </p>
+          &nbsp; &nbsp;
+          <p class="text-sm text-gray-500">
+            <strong>Tags:</strong>
+            scala
+          </p>
+        </div>
 
-      <div class="max-w-6xl prose text-justify"><p>In the <a href="{{&lt; ref &quot;/how-to-learn-new-programming-language-quickly&quot; &gt;}}">previous post</a> we came up with the template for learning a new language. In this post we will use it to learn <a href="https://www.scala-lang.org">Scala</a>.</p>
+        <div class="max-w-6xl prose text-justify">
+          <p>
+            In the
+            <a
+              href="{{ &lt; ref &quot;/how-to-learn-new-programming-language-quickly&quot; &gt; }}"
+            >
+              previous post
+            </a>
+            we came up with the template for learning a new language. In this
+            post we will use it to learn
+            <a href="https://www.scala-lang.org">Scala</a>
+            .
+          </p>
 
-<h2>Build and Dependency Management</h2>
+          <h2>Build and Dependency Management</h2>
 
-<p>sbt is a build and dependency management tool for Scala. If your project is managed by sbt, then your folder structure should be organised as follows:</p>
+          <p>
+            sbt is a build and dependency management tool for Scala. If your
+            project is managed by sbt, then your folder structure should be
+            organised as follows:
+          </p>
 
-<pre><code>build.sbt
+          <pre><code>build.sbt
 project/
   *.scala files
 src/
@@ -63,18 +78,43 @@ src/
     scala/
 </code></pre>
 
-<p>sbt needs a build definition file called <code>build.sbt</code>. To support the build process, you can also keep scala files inside <code>project/*.scala</code> files. sbt combines both <code>build.sbt</code> and files inside <code>projects/</code> to build your project.</p>
+          <p>
+            sbt needs a build definition file called
+            <code>build.sbt</code>
+            . To support the build process, you can also keep scala files inside
+            <code>project/*.scala</code>
+            files. sbt combines both
+            <code>build.sbt</code>
+            and files inside
+            <code>projects/</code>
+            to build your project.
+          </p>
 
-<p>sbt relies on two things: tasks and settings. Task defines the action that you want to perform and setting defines key/value pair that will be used by the tasks.</p>
+          <p>
+            sbt relies on two things: tasks and settings. Task defines the
+            action that you want to perform and setting defines key/value pair
+            that will be used by the tasks.
+          </p>
 
-<p>Some example tasks include: <code>sbt compile, sbt clean, sbt run, sbt test sbt console</code>. To get all the tasks applicable for the project, please execute sbt tasks.</p>
+          <p>
+            Some example tasks include:
+            <code>sbt compile, sbt clean, sbt run, sbt test sbt console</code>
+            . To get all the tasks applicable for the project, please execute
+            sbt tasks.
+          </p>
 
-<p>you can execute sbt tasks via command line or get into an interactive mode by executing "sbt" and then invoking the tasks one by one. Interactive mode is helpful if you want to test your application. Because it loads all the files and puts them in the classpath.</p>
+          <p>
+            you can execute sbt tasks via command line or get into an
+            interactive mode by executing "sbt" and then invoking the tasks one
+            by one. Interactive mode is helpful if you want to test your
+            application. Because it loads all the files and puts them in the
+            classpath.
+          </p>
 
-<p>A sample build.sbt file:</p>
+          <p>A sample build.sbt file:</p>
 
-<div class="codehilite">
-<pre><span></span><code><span class="c1">// key-value pairs.</span>
+          <div class="codehilite">
+            <pre><span></span><code><span class="c1">// key-value pairs.</span>
 <span class="n">name</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;scala-project&quot;</span>
 <span class="n">version</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
 <span class="n">scalaVersion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;2.11.6&quot;</span>
@@ -84,26 +124,57 @@ src/
 <span class="s">&quot;org.scalatest&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="s">&quot;scalatest_2.11&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="s">&quot;2.2.6&quot;</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="s">&quot;test&quot;</span>
 <span class="p">)</span>
 </code></pre>
-</div>
+          </div>
 
-<p>libraryDependency follows this pattern: <code>libraryDependencies = Seq(groupID % artifactID % version % configuration)</code></p>
+          <p>
+            libraryDependency follows this pattern:
+            <code>
+              libraryDependencies = Seq(groupID % artifactID % version %
+              configuration)
+            </code>
+          </p>
 
-<p>configuration is not needed for all artefacts but test artefacts need <code>"test"</code> configuration.</p>
+          <p>
+            configuration is not needed for all artefacts but test artefacts
+            need
+            <code>"test"</code>
+            configuration.
+          </p>
 
-<p>you can add compile option in sbt like this:
-<code>scalacOptions ++= Seq("-feature", "-language:\_", "-unchecked", "-deprecation", "-encoding", "utf8")</code></p>
+          <p>
+            you can add compile option in sbt like this:
+            <code>
+              scalacOptions ++= Seq("-feature", "-language:\_", "-unchecked",
+              "-deprecation", "-encoding", "utf8")
+            </code>
+          </p>
 
-<p>The last thing that I want to mention is plugins. Plugins are basically user defined tasks which you can add to your project. Some example plugins are <code>sbt-scalafmt</code> for formatting your code. all plugins should be defined inside the <code>project/plugins.sbt</code> file.</p>
+          <p>
+            The last thing that I want to mention is plugins. Plugins are
+            basically user defined tasks which you can add to your project. Some
+            example plugins are
+            <code>sbt-scalafmt</code>
+            for formatting your code. all plugins should be defined inside the
+            <code>project/plugins.sbt</code>
+            file.
+          </p>
 
-<p>you can find the needed dependency artefacts here: <a href="https://mvnrepository.com">MVN Repository</a></p>
+          <p>
+            you can find the needed dependency artefacts here:
+            <a href="https://mvnrepository.com">MVN Repository</a>
+          </p>
 
-<p>more information about sbt can be found here: <a href="https://www.scala-sbt.org/1.x/docs/sbt-by-example.html">More on sbt</a></p>
-</div>
-      <br />
-      <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
-    </article>
-  </div>
-
+          <p>
+            more information about sbt can be found here:
+            <a href="https://www.scala-sbt.org/1.x/docs/sbt-by-example.html">
+              More on sbt
+            </a>
+          </p>
+        </div>
+        <br />
+        <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
+      </article>
+    </div>
 
     <script>
       hljs.highlightAll();

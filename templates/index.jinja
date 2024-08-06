@@ -7,7 +7,7 @@
   >
     <h1 class="text-2xl font-semibold mb-4">Latest Posts</h1>
     <ul>
-      {% for post_title, post_file in post_titles %}
+      {% for post_title, post_file, _ in post_titles|sort(attribute=2)|reverse %}
         <li class="mb-4 list-disc">
           <a
             href="/posts/{{ post_file }}"

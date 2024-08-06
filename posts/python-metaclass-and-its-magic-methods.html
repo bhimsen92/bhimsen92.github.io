@@ -9,14 +9,14 @@
     <script src="/static/js/highlight.min.js"></script>
   </head>
   <body
-    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal"
+    class="bg-gray-100 container mx-auto font-sans leading-normal tracking-normal max-w-70"
   >
     <!-- Navigation bar -->
     <nav class="p-4 border-b-4 border-b-orange-700">
       <div class="flex justify-between items-center">
         <div class="flex items-center space-x-4">
           <a href="/">
-            <span class="text-lg font-bold font-mono">Blog</span>
+            <span class="text-lg font-bold font-mono">Code Chronicles</span>
           </a>
           <a href="/">Posts</a>
         </div>
@@ -24,45 +24,71 @@
       </div>
     </nav>
 
-    
-  <!-- Main content -->
-  <div class="container mx-auto flex-grow">
-    <!-- Blog post -->
-    <article class="bg-white rounded-lg shadow-md p-8">
-      <h1 class="text-3xl font-semibold text-gray-900 mb-4">
-        Python Metaclass and It's Magic Methods
-      </h1>
+    <!-- Main content -->
+    <div class="container mx-auto flex-grow">
+      <!-- Blog post -->
+      <article class="bg-white rounded-lg shadow-md p-8">
+        <h1 class="text-3xl font-semibold text-gray-900 mb-4">
+          Python Metaclass and It's Magic Methods
+        </h1>
 
-      <div class="flex items-center text-gray-600 mb-4">
-        <p class="text-sm text-gray-500">
-          <strong>Date:</strong>
-          2024-06-27
-        </p>
-        &nbsp; &nbsp;
-        <p class="text-sm text-gray-500">
-          <strong>Tags:</strong>
-          python, metaclass
-        </p>
-      </div>
+        <div class="flex items-center text-gray-600 mb-4">
+          <p class="text-sm text-gray-500">
+            <strong>Date:</strong>
+            2024-06-27
+          </p>
+          &nbsp; &nbsp;
+          <p class="text-sm text-gray-500">
+            <strong>Tags:</strong>
+            python, metaclass
+          </p>
+        </div>
 
-      <div class="max-w-6xl prose text-justify"><p>Metaclasses are a very confusing and complicated topic in Python, at least for me. Everything seems clear when I read about this topic, but I forget it after a few days. So, I thought it would be better to blog about my understanding to ensure this concept always stays with me.</p>
+        <div class="max-w-6xl prose text-justify">
+          <p>
+            Metaclasses are a very confusing and complicated topic in Python, at
+            least for me. Everything seems clear when I read about this topic,
+            but I forget it after a few days. So, I thought it would be better
+            to blog about my understanding to ensure this concept always stays
+            with me.
+          </p>
 
-<h2>What are metaclasses ?</h2>
+          <h3>What are metaclasses ?</h3>
 
-<p>A <code>metaclass</code> is simply a class of a class. In Python, everything is an object, including <code>class</code>. Python's built-in function <code>type</code> is responsible for creating new type objects, also known as classes, at runtime. You can verify this by checking the <code>type</code> of the <code>class</code> property.</p>
+          <p>
+            A
+            <code>metaclass</code>
+            is simply a class of a class. In Python, everything is an object,
+            including
+            <code>class</code>
+            . Python's built-in function
+            <code>type</code>
+            is responsible for creating new type objects, also known as classes,
+            at runtime. You can verify this by checking the
+            <code>type</code>
+            of the
+            <code>class</code>
+            property.
+          </p>
 
-<div class="codehilite">
-<pre><span></span><code><span class="o">&gt;&gt;</span> <span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+          <div class="codehilite">
+            <pre><span></span><code><span class="o">&gt;&gt;</span> <span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
 <span class="o">&gt;&gt;</span>    <span class="k">pass</span>
 <span class="o">&gt;&gt;</span> <span class="n">A</span><span class="o">.</span><span class="vm">__class__</span>
 <span class="o">&gt;&gt;</span> <span class="nb">type</span>
 </code></pre>
-</div>
+          </div>
 
-<p>A type function when supplied with one argument, returns the type of the object which is nothing but its class. If you supply 3 arguments, it creates a new <code>type</code> i.e class at runtime.</p>
+          <p>
+            A type function when supplied with one argument, returns the type of
+            the object which is nothing but its class. If you supply 3
+            arguments, it creates a new
+            <code>type</code>
+            i.e class at runtime.
+          </p>
 
-<div class="codehilite">
-<pre><span></span><code><span class="o">&gt;&gt;</span> <span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+          <div class="codehilite">
+            <pre><span></span><code><span class="o">&gt;&gt;</span> <span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
 <span class="o">&gt;&gt;</span>     <span class="k">pass</span>
 <span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
 <span class="o">&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
@@ -71,53 +97,122 @@
 <span class="o">&gt;&gt;</span> <span class="n">B</span><span class="o">.</span><span class="n">a</span>
 <span class="o">&gt;&gt;</span> <span class="mi">2</span>
 </code></pre>
-</div>
+          </div>
 
-<p>You can see that a class definition is just syntactic sugar for a “type” call at runtime, which is invoked when the interpreter parses the class definition.</p>
+          <p>
+            You can see that a class definition is just syntactic sugar for a
+            “type” call at runtime, which is invoked when the interpreter parses
+            the class definition.
+          </p>
 
-<p>Python allows us to customize the class construction behavior by subclassing the “type” class and overriding certain magic methods, namely: “new,” “init,” “call,” and “prepare.” Once this custom metaclass is defined, we can have new classes use this metaclass by passing it as an argument in the class definition using the “metaclass” keyword.</p>
+          <p>
+            Python allows us to customize the class construction behavior by
+            subclassing the “type” class and overriding certain magic methods,
+            namely: “new,” “init,” “call,” and “prepare.” Once this custom
+            metaclass is defined, we can have new classes use this metaclass by
+            passing it as an argument in the class definition using the
+            “metaclass” keyword.
+          </p>
 
-<p>Before we understand how the aforementioned magic methods work in the case of metaclasses, let's understand how they work in normal classes.</p>
+          <p>
+            Before we understand how the aforementioned magic methods work in
+            the case of metaclasses, let's understand how they work in normal
+            classes.
+          </p>
 
-<h2>Magic methods and their behaviour</h2>
+          <h3>Magic methods and their behaviour</h3>
 
-<p>Let's understand the order of method execution before we look at a simple example. The “<strong>prepare</strong>” method is only applicable when the class is a metaclass (explained later), so we will focus on the “<strong>new</strong>,” “<strong>init</strong>,” and “<strong>call</strong>” methods.</p>
+          <p>
+            Let's understand the order of method execution before we look at a
+            simple example. The “
+            <strong>prepare</strong>
+            ” method is only applicable when the class is a metaclass (explained
+            later), so we will focus on the “
+            <strong>new</strong>
+            ,” “
+            <strong>init</strong>
+            ,” and “
+            <strong>call</strong>
+            ” methods.
+          </p>
 
-<p>Each of the above methods receives the same arguments as the constructor, except for <strong>call</strong>.</p>
+          <p>
+            Each of the above methods receives the same arguments as the
+            constructor, except for
+            <strong>call</strong>
+            .
+          </p>
 
-<h3><code>__new__</code></h3>
+          <h4><code>__new__</code></h4>
 
-<ul>
-<li>It is called before an instance of a class is created, that is, when you try to instantiate a class.</li>
-<li>It is the first method invoked among the magic methods mentioned earlier.</li>
-<li>It is a static method where the first argument is the class whose object will be created. The rest are the arguments passed to the constructor.</li>
-<li>This method must return the created object; otherwise, “<strong>init</strong>” won’t be called next.</li>
-</ul>
+          <ul>
+            <li>
+              It is called before an instance of a class is created, that is,
+              when you try to instantiate a class.
+            </li>
+            <li>
+              It is the first method invoked among the magic methods mentioned
+              earlier.
+            </li>
+            <li>
+              It is a static method where the first argument is the class whose
+              object will be created. The rest are the arguments passed to the
+              constructor.
+            </li>
+            <li>
+              This method must return the created object; otherwise, “
+              <strong>init</strong>
+              ” won’t be called next.
+            </li>
+          </ul>
 
-<h3><code>__init__</code></h3>
+          <h4><code>__init__</code></h4>
 
-<ul>
-<li>We are all familiar with this method call. It initializes the object.</li>
-<li>It is the second method called right after the “<strong>new</strong>” method call.</li>
-<li>It returns nothing.</li>
-</ul>
+          <ul>
+            <li>
+              We are all familiar with this method call. It initializes the
+              object.
+            </li>
+            <li>
+              It is the second method called right after the “
+              <strong>new</strong>
+              ” method call.
+            </li>
+            <li>It returns nothing.</li>
+          </ul>
 
-<h3><code>__call__</code></h3>
+          <h4><code>__call__</code></h4>
 
-<ul>
-<li>This is invoked when an instance of the class is called as a function.</li>
-<li>It is typically needed when a function or service requires a callable object, probably needed when you want stateful functions.</li>
-<li>It receives the arguments that are supplied when the object is called.</li>
-</ul>
+          <ul>
+            <li>
+              This is invoked when an instance of the class is called as a
+              function.
+            </li>
+            <li>
+              It is typically needed when a function or service requires a
+              callable object, probably needed when you want stateful functions.
+            </li>
+            <li>
+              It receives the arguments that are supplied when the object is
+              called.
+            </li>
+          </ul>
 
-<h2>Magic methods in normal classe</h2>
+          <h3>Magic methods in normal classe</h3>
 
-<p>Let's try to implement the “Singleton” class using the above magic methods. To ensure that only one instance of a class exists at any moment, we need to intercept the object creation step. Just before an object is created, we will check if the object already exists. If it does, we return that instance; otherwise, we create it, store it in a map, and return the object.</p>
+          <p>
+            Let's try to implement the “Singleton” class using the above magic
+            methods. To ensure that only one instance of a class exists at any
+            moment, we need to intercept the object creation step. Just before
+            an object is created, we will check if the object already exists. If
+            it does, we return that instance; otherwise, we create it, store it
+            in a map, and return the object.
+          </p>
 
-<p>Here is an implementation:</p>
+          <p>Here is an implementation:</p>
 
-<div class="codehilite">
-<pre><span></span><code><span class="k">class</span> <span class="nc">Singleton</span><span class="p">:</span>
+          <div class="codehilite">
+            <pre><span></span><code><span class="k">class</span> <span class="nc">Singleton</span><span class="p">:</span>
     <span class="n">__instances</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># this check make that we don&#39;t create an object of Singleton.</span>
@@ -135,31 +230,65 @@
 <span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
     <span class="k">pass</span>
 </code></pre>
-</div>
+          </div>
 
-<h3>Explaination</h3>
+          <h4>Explaination</h4>
 
-<p>As explained before, for normal classes (which don't use a metaclass), the <strong>new</strong> method is invoked just before an object is instantiated. This makes it a perfect place to keep the logic to avoid creating unnecessary objects and always reuse the object for the given class.</p>
+          <p>
+            As explained before, for normal classes (which don't use a
+            metaclass), the
+            <strong>new</strong>
+            method is invoked just before an object is instantiated. This makes
+            it a perfect place to keep the logic to avoid creating unnecessary
+            objects and always reuse the object for the given class.
+          </p>
 
-<h2>Using meta class</h2>
+          <h3>Using meta class</h3>
 
-<p>Let's explore metaclasses by building an AbstractMetaclass that throws an error if a class does not define all required abstract methods. Unlike Python's built-in abstractmethod decorator and ABC class, our metaclass will enforce the abstract method requirements at the time the class is defined, rather than when an instance of the class is created.</p>
+          <p>
+            Let's explore metaclasses by building an AbstractMetaclass that
+            throws an error if a class does not define all required abstract
+            methods. Unlike Python's built-in abstractmethod decorator and ABC
+            class, our metaclass will enforce the abstract method requirements
+            at the time the class is defined, rather than when an instance of
+            the class is created.
+          </p>
 
-<h3>Key Concepts:</h3>
+          <h4>Key Concepts:</h4>
 
-<ul>
-<li><strong>new</strong>: Called right after the class definition is parsed and just before the class object is created. It receives the name, bases, and attributes of the class.</li>
-<li><strong>init</strong>: Called right after the class object is created. It also receives the name, bases, and attributes of the class.</li>
-<li><strong>call</strong>: Called when you try to instantiate an object of the class. It receives the same arguments as the class constructor.</li>
-<li><strong>prepare</strong>: Customizes the class namespace. It returns a dictionary-like object to store class variables and functions.</li>
-</ul>
+          <ul>
+            <li>
+              <strong>new</strong>
+              : Called right after the class definition is parsed and just
+              before the class object is created. It receives the name, bases,
+              and attributes of the class.
+            </li>
+            <li>
+              <strong>init</strong>
+              : Called right after the class object is created. It also receives
+              the name, bases, and attributes of the class.
+            </li>
+            <li>
+              <strong>call</strong>
+              : Called when you try to instantiate an object of the class. It
+              receives the same arguments as the class constructor.
+            </li>
+            <li>
+              <strong>prepare</strong>
+              : Customizes the class namespace. It returns a dictionary-like
+              object to store class variables and functions.
+            </li>
+          </ul>
 
-<h3>Implementation:</h3>
+          <h4>Implementation:</h4>
 
-<p>Let's implement AbstractMetaclass to enforce that all abstract methods are defined in subclasses:</p>
+          <p>
+            Let's implement AbstractMetaclass to enforce that all abstract
+            methods are defined in subclasses:
+          </p>
 
-<div class="codehilite">
-<pre><span></span><code><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+          <div class="codehilite">
+            <pre><span></span><code><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
 
 <span class="c1"># if you define methods on metaclass, they become classmethods of the class being created</span>
 <span class="c1"># so define it outside</span>
@@ -217,15 +346,17 @@
 <span class="k">class</span> <span class="nc">Square</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
     <span class="k">pass</span>
 </code></pre>
-</div>
+          </div>
 
-<p>I hope you now have a good understanding of what a metaclass is and how its magic methods work. Thank you for reading!</p>
-</div>
-      <br />
-      <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
-    </article>
-  </div>
-
+          <p>
+            I hope you now have a good understanding of what a metaclass is and
+            how its magic methods work. Thank you for reading!
+          </p>
+        </div>
+        <br />
+        <a href="/" class="text-blue-500 hover:underline">Back to Posts</a>
+      </article>
+    </div>
 
     <script>
       hljs.highlightAll();

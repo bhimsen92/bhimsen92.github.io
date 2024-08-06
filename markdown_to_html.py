@@ -50,7 +50,7 @@ def main():
             f.write(rendered_html)
 
         if markdown_file != "about.md":
-            post_titles.append((post["title"], output_file))
+            post_titles.append((post["title"], output_file, post.metadata['date']))
         
         click.echo(f"Rendered {markdown_file} to {output_file}")
 
