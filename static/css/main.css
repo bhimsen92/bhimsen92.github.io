@@ -670,8 +670,8 @@ video {
   padding: 2rem;
 }
 
-.text-justify {
-  text-align: justify;
+.text-left {
+  text-align: left;
 }
 
 .font-sans {
@@ -701,8 +701,8 @@ video {
   font-weight: 600;
 }
 
-.leading-normal {
-  line-height: 1.5;
+.leading-relaxed {
+  line-height: 1.625;
 }
 
 .tracking-normal {
