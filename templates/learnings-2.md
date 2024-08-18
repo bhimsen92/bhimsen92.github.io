@@ -44,7 +44,7 @@ I’m more productive in an office setting, where I regularly meet people to dis
 I don’t want to work in a company where technology is stagnant or processes aren’t followed. I prefer working with modern tech and writing or reviewing technical design documents.
 
 **Clear Role and Responsibilities:**  
-If my role isn’t clear, I struggle. I’m more productive and excel when given clear directions, especially at the beginning. Once I’m settled in, I can drive tasks forward independently.
+I like to have my role clear from the start, especially if it involves owning a service or feature. It helps me get going quickly. Once I’m settled in, I can handle things on my own, like managing other projects or services.
 
 **Structured Approach to Problem Solving:**  
 I like to write a solution document before coding, especially if the code touches multiple components. I’d rather have the document reviewed first than the code. I believe this approach speeds things up (because reading text is faster than reading code) and avoids unnecessary back and forth. If this isn’t allowed because it’s seen as slowing things down, I think it will soon lead to trouble, at least for me.
